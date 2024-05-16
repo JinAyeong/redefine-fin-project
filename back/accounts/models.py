@@ -8,7 +8,7 @@ class User(AbstractUser):
     name = models.CharField(max_length=10)
     email = models.EmailField(max_length=30)
     profile_img = models.ImageField(blank=True, null=True)
-    age = models.IntegerField()
+    age = models.IntegerField(blank=True, null=True)
     money = models.IntegerField(blank=True, null=True)
     salary = models.IntegerField(blank=True, null=True)
     # 가입한 상품 목록 리스트를 ,로 구분된 문자열로 저장함
