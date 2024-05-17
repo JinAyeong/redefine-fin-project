@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     # DRF
     'rest_framework',
     'rest_framework.authtoken',
+    # django-cors-headers
+    'corsheaders',
     # REST_AUTH
     'dj_rest_auth',
     'allauth',
@@ -87,6 +89,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+
+CORS_ALLOWED_ORIGINS = [
+    'https://127.0.0.1:8000',
+    'https://localhost:5173'
 ]
 
 ROOT_URLCONF = 'redefine_fin_project.urls'
