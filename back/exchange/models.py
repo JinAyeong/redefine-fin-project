@@ -2,11 +2,11 @@ from django.db import models
 
 # Create your models here.
 class ExchangeRates(models.Model):
-    # 통화 코드
+    # 통화코드
     cur_unit = models.CharField(max_length=10)
     # 국가/통화명(공백으로 구분)
     cur_nm = models.CharField(max_length=50)
-    # 송금 받을때 가격 (decimal_places : 소수점 n자리)
+    # 송금 받을때 가격
     ttb = models.DecimalField(max_digits=12, decimal_places=4)
     # 송금 보낼때 가격
     tts = models.DecimalField(max_digits=12, decimal_places=4)
