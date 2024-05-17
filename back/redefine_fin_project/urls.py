@@ -25,8 +25,11 @@ urlpatterns = [
 
     path('accounts/', include('accounts.urls')),
     path('articles/', include('articles.urls')),
+<<<<<<< HEAD
 
     # path('finances/', include('finances.urls')),
     path('exchange/', include('exchange.urls')),
+=======
+>>>>>>> c0ab076edad6693c95ee43a55b98a883ee0468a5
     # path('finances/', include('finances.urls')),
 ]
