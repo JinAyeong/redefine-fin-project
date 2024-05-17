@@ -17,6 +17,8 @@ class User(AbstractUser):
     # superuser fields
     is_superuser = models.BooleanField(default=False)
 
+    USERNAME_FIELD = 'username'
+
  
 class CustomAccountAdapter(DefaultAccountAdapter):
     def save_user(self, request, user, form, commit=True):
