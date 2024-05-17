@@ -94,8 +94,8 @@ MIDDLEWARE = [
 
 
 CORS_ALLOWED_ORIGINS = [
-    'https://127.0.0.1:8000',
-    'https://localhost:5173'
+    'http://127.0.0.1:8000',
+    'http://localhost:5173',
 ]
 
 ROOT_URLCONF = 'redefine_fin_project.urls'
