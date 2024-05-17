@@ -22,20 +22,38 @@ export const useProfileStore = defineStore('profile', () => {
 
     axios({
       method : 'post',
-      url : `${API_URL}/dj-rest-auth/registration/`,
+      url : `${API_URL}/accounts/signup/`,
       data : {
-        username, email, password1, password2, name
+        username, email, password1, password2, name, age, money, salary
       }
     })
     .then((response) => {
       console.log('회원가입 성공!')
       // const password = password1
-      
     })
     .catch((error) => {
       console.log(error)
     })
   }
 
-  return { signUp, isLogin }
+  
+  const logIn = function (payload) {
+    const { username, password } = payload
+
+    axios({
+      method: 'post',
+      url: `${API_URL}/accounts/login/`,
+      data: {
+        username, password
+      }
+    })
+      .then(response => {
+        console.log('로그인 성공!')
+        console.log(response.data)
+        token.value = response.data.key
+      })
+      .catch(error => console.log(error))
+  }
+
+  return { token, signUp, logIn, isLogin }
 })

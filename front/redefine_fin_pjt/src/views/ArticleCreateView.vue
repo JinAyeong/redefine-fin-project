@@ -1,10 +1,12 @@
 <template>
   <div>
     <h1>게시글 생성 페이지</h1>
-    <form @submit.prevent="articleCreate">
-      제목 : <input v-model.trim="title" type="text">
-      내용 : <input v-model.trim="content" type="text">
-      <input type="submit" value="제출">
+    <form @submit.prevent="createArticle">
+      <label for="title">제목 : </label>
+      <input type="text" v-model.trim="title"><br>
+      <label for="content">내용 : </label>
+      <input type="text" v-model.trim="content"><br>
+      <input type="submit" value="게시글 작성">
     </form>
   </div>
 </template>
@@ -12,28 +14,45 @@
 <script setup>
 
 import { ref } from 'vue'
-import axios from 'axios'
-import { useRouter } from 'vue-router'
-import { useArticleStore } from '@/stores/article'
+// import { useArticleStore } from '@/stores/article';
+import { useProfileStore } from '@/stores/profile';
+import axios from 'axios';
 
-const router = useRouter()
+// const store = useArticleStore()
+const store = useProfileStore()
+
 const title = ref(null)
 const content = ref(null)
-const store = useArticleStore()
 
-const articleCreate = function () {
-  axios({
-    method: 'post',
-    url: `${store.API_URL}/api/v1/articles/`,
-    data: {
-      title: title.value,
-      content: content.value
-    }
-      .then(() => {
-        
+const createArticle = function () {
+
+    axios({
+      method: 'post',
+      url: `${store.API_URL}/articles/`,
+      data: {
+        title: title.value,
+        content: content.value
+      },
+      headers: {
+        Authorization: `Token ${store.token}`
+      }
+    })
+      .then(response => {
+        console.log('게시글 생성 완료!')
       })
-  })
-}
+      .catch(error => {
+        console.log(error)
+        console.log(store.token)
+      })
+  }
+
+// const createArticle = function () {
+//     const payload = {
+//         title: title.value,
+//         content: content.value
+//     }
+//     store.createArticle(payload)
+// }
 
 </script>
 
