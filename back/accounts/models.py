@@ -7,8 +7,8 @@ class User(AbstractUser):
     username = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=10)
     email = models.EmailField(max_length=30)
-    profile_img = models.ImageField(blank=True, null=True)
-    age = models.IntegerField()
+    # profile_img = models.ImageField(blank=True, null=True)
+    age = models.IntegerField(blank=True, null=True)
     money = models.IntegerField(blank=True, null=True)
     salary = models.IntegerField(blank=True, null=True)
     # 가입한 상품 목록 리스트를 ,로 구분된 문자열로 저장함
@@ -17,38 +17,61 @@ class User(AbstractUser):
     # superuser fields
     is_superuser = models.BooleanField(default=False)
 
- 
-class CustomAccountAdapter(DefaultAccountAdapter):
-    def save_user(self, request, user, form, commit=True):
-        """
-        Saves a new `User` instance using information provided in the
-        signup form.
-        """
-        from allauth.account.utils import user_email, user_field, user_username
-        
-        data = form.cleaned_data
-        first_name = data.get("first_name")
-        last_name = data.get("last_name")
-        email = data.get("email")
-        username = data.get("username")
-        # name 필드를 추가
-        name = data.get("name")
+    USERNAME_FIELD = 'username'
 
-        user_email(user, email)
-        user_username(user, username)
-        if first_name:
-            user_field(user, "first_name", first_name)
-        if last_name:
-            user_field(user, "last_name", last_name)
-        if name:
-            user_field(user, "name", name)
-        if "password1" in data:
-            user.set_password(data["password1"])
-        else:
-            user.set_unusable_password()
-        self.populate_username(request, user)
-        if commit:
-            # Ability not to commit makes it easier to derive from
-            # this adapter by adding
-            user.save()
-        return user
+
+# class CustomAccountAdapter(DefaultAccountAdapter):
+#     def save_user(self, request, user, form, commit=True):
+#         """
+#         Saves a new `User` instance using information provided in the
+#         signup form.
+#         """
+#         from allauth.account.utils import user_email, user_field, user_username
+        
+#         data = form.cleaned_data
+#         first_name = data.get("first_name")
+#         last_name = data.get("last_name")
+#         username = data.get("username")
+#         # name 필드를 추가
+#         name = data.get("name")
+#         email = data.get("email")
+#         # profile_img = data.get('profile_img')
+#         age = data.get('age')
+#         money = data.get('money')
+#         salary = data.get('salary')
+#         financial_product = data.get('financial_products')
+
+#         user_email(user, email)
+#         user_username(user, username)
+#         if first_name:
+#             user_field(user, "first_name", first_name)
+#         if last_name:
+#             user_field(user, "last_name", last_name)
+#         if name:
+#             user_field(user, "name", name)
+#         if email:
+#             user_field(user, "email", email)
+#         # if profile_img:
+#         #     user_field(user, "profile_img", profile_img)
+#         if age:
+#             user_field(user, "age", age)
+#         if money:
+#             user_field(user, "money", money)
+#         if salary:
+#             user_field(user, "salary", salary)
+#         if financial_product:
+#             financial_products = user.financial_products.split(',')
+#             financial_products.append(financial_product)
+#             if len(financial_products) > 1:
+#                 financial_products = ','.join(financial_products)
+#             user_field(user, "financial_products", financial_products)
+#         if "password1" in data:
+#             user.set_password(data["password1"])
+#         else:
+#             user.set_unusable_password()
+#         self.populate_username(request, user)
+#         if commit:
+#             # Ability not to commit makes it easier to derive from
+#             # this adapter by adding
+#             user.save()
+#         return user

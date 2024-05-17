@@ -35,9 +35,12 @@ INSTALLED_APPS = [
     'accounts',
     'articles',
     'finances',
+    'exchange',
     # DRF
     'rest_framework',
     'rest_framework.authtoken',
+    # django-cors-headers
+    'corsheaders',
     # REST_AUTH
     'dj_rest_auth',
     'allauth',
@@ -70,6 +73,12 @@ REST_FRAMEWORK = {
     ],
 }
 
+# REST-AUTH 회원가입 기본 Serailizer 재정의
+REST_AUTH = {
+    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+    'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer',
+ }
+
 
 MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
@@ -81,6 +90,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://localhost:5173',
 ]
 
 ROOT_URLCONF = 'redefine_fin_project.urls'
@@ -158,4 +173,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
 
-ACCOUNT_ADAPTER  = 'accounts.models.CustomAccountAdapter'
+ACCOUNT_ADAPTER  = 'accounts.adapter.CustomAccountAdapter'
