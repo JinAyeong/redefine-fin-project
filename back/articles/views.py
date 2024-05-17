@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ArticleListSerializer, ArticleDetailSerializer, CommentSerializer
@@ -9,7 +9,7 @@ from .models import Article, Comment
 
 # 게시글 리스트 조회 / 게시글 작성
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def article_list(request):
     if request.method == 'GET':
         articles = Article.objects.all()

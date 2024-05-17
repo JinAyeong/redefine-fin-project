@@ -25,16 +25,16 @@ UserModel = get_user_model()
 # 회원가입 custom serailizer
 class CustomRegisterSerializer(RegisterSerializer):
     # 필요한 필드들을 추가합니다.
-    username = serializers.CharField(
-        required=False,
-        allow_blank=True,
-        max_length=20
-    )
+    # username = serializers.CharField(
+    #     required=False,
+    #     allow_blank=True,
+    #     max_length=20
+    # )
     name = serializers.CharField(max_length=10)
-    email = serializers.EmailField(
-        required=False,
-        max_length=30
-    )
+    # email = serializers.EmailField(
+    #     required=False,
+    #     max_length=30
+    # )
     age = serializers.IntegerField()
     money = serializers.IntegerField()
     salary = serializers.IntegerField()
@@ -44,6 +44,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         return {
             'username': self.validated_data.get('username', ''),
             'password1': self.validated_data.get('password1', ''),
+            'password2': self.validated_data.get('password2', ''),
             # 필드 추가
             'name': self.validated_data.get('name', ''),
             'email': self.validated_data.get('email', ''),
