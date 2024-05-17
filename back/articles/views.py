@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ArticleListSerializer, ArticleDetailSerializer, CommentSerializer
@@ -8,6 +9,7 @@ from .models import Article, Comment
 
 # 게시글 리스트 조회 / 게시글 작성
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def article_list(request):
     if request.method == 'GET':
         articles = Article.objects.all()
@@ -23,6 +25,7 @@ def article_list(request):
 
 # 게시글 상세 조회 / 수정 / 삭제
 api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def article_detail(request, article_pk):
     article = Article.objects.get(pk=article_pk)
 
@@ -43,7 +46,7 @@ def article_detail(request, article_pk):
 
 # 댓글 리스트 조회 / 생성
 @api_view(['GET', 'POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def comment_list(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     comments = Comment.objects.all()
@@ -61,6 +64,7 @@ def comment_list(request, article_pk):
 
 # 댓글 상세 조회 / 수정 / 삭제
 @api_view(['GET', 'DELETE', 'PUT'])
+@permission_classes([IsAuthenticated])
 def comment_detail(request, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
 

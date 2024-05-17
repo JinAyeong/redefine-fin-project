@@ -35,15 +35,21 @@ class CustomRegisterSerializer(RegisterSerializer):
         required=False,
         max_length=30
     )
+    age = serializers.IntegerField()
+    money = serializers.IntegerField()
+    salary = serializers.IntegerField()
 
     # 해당 필드도 저장 시 함께 사용하도록 설정합니다. 
     def get_cleaned_data(self):
         return {
             'username': self.validated_data.get('username', ''),
             'password1': self.validated_data.get('password1', ''),
-            # name 필드 추가
+            # 필드 추가
             'name': self.validated_data.get('name', ''),
             'email': self.validated_data.get('email', ''),
+            'age': self.validated_data.get('age', ''),
+            'money': self.validated_data.get('money', ''),
+            'salary': self.validated_data.get('salary', ''),
         }
     
     def save(self, request):
@@ -73,7 +79,13 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         if hasattr(UserModel, 'last_name'):
             extra_fields.append('last_name')
         if hasattr(UserModel, 'name'):
-            extra_fields.append('name')    
+            extra_fields.append('name')
+        if hasattr(UserModel, 'age'):
+            extra_fields.append('age')
+        if hasattr(UserModel, 'money'):
+            extra_fields.append('money')
+        if hasattr(UserModel, 'salary'):
+            extra_fields.append('salary')
         model = UserModel
         fields = ('pk', *extra_fields)
         read_only_fields = ('email',)

@@ -173,4 +173,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
 
-ACCOUNT_ADAPTER  = 'accounts.models.CustomAccountAdapter'
+ACCOUNT_ADAPTER  = 'accounts.adapter.CustomAccountAdapter'
