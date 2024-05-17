@@ -31,10 +31,15 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         data = form.cleaned_data
         first_name = data.get("first_name")
         last_name = data.get("last_name")
-        email = data.get("email")
         username = data.get("username")
         # name 필드를 추가
         name = data.get("name")
+        email = data.get("email")
+        profile_img = data.get('profile_img')
+        age = data.get('age')
+        money = data.get('money')
+        salary = data.get('salary')
+        financial_product = data.get('financial_products')
 
         user_email(user, email)
         user_username(user, username)
@@ -44,6 +49,22 @@ class CustomAccountAdapter(DefaultAccountAdapter):
             user_field(user, "last_name", last_name)
         if name:
             user_field(user, "name", name)
+        if email:
+            user_field(user, "email", email)
+        if profile_img:
+            user_field(user, "profile_img", profile_img)
+        if age:
+            user_field(user, "age", age)
+        if money:
+            user_field(user, "money", money)
+        if salary:
+            user_field(user, "salary", salary)
+        if financial_product:
+            financial_products = user.financial_products.split(',')
+            financial_products.append(financial_product)
+            if len(financial_products) > 1:
+                financial_products = ','.join(financial_products)
+            user_field(user, "financial_products", financial_products)
         if "password1" in data:
             user.set_password(data["password1"])
         else:

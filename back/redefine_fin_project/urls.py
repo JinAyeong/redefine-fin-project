@@ -25,9 +25,5 @@ urlpatterns = [
 
     path('accounts/', include('accounts.urls')),
     path('articles/', include('articles.urls')),
-<<<<<<< HEAD
-    path('finances/', include('finances.urls')),
-=======
     # path('finances/', include('finances.urls')),
->>>>>>> 71341e34445a4bceb18f4d5e977b0ae324dfe3fd
 ]
