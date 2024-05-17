@@ -22,7 +22,7 @@
                 <label for="password2">password confirmation : </label>
                 <input type="password" v-model.trim="password2" id="password2">
             </div>
-            <div>
+            <!-- <div>
                 <label for="age">age : </label>
                 <input type="text" v-model.trim="age" id="age">
             </div>
@@ -33,7 +33,7 @@
             <div>
                 <label for="salary">salary : </label>
                 <input type="password" v-model.trim="salary" id="salary">
-            </div>
+            </div> -->
             <input type="submit" value="SignUp">
         </form>
     </div>
@@ -41,26 +41,29 @@
 
 <script setup>
 import {ref} from 'vue'
-// 
+import { useProfileStore } from '@/stores/profile.js'
+
+const store = useProfileStore()
+
 const username = ref(null)
-const name = ref(null)
 const email = ref(null)
 const password1 = ref(null)
 const password2 = ref(null)
-const age = ref(null)
-const money = ref(null)
-const salary = ref(null)
+const name = ref(null)
+// const age = ref(null)
+// const money = ref(null)
+// const salary = ref(null)
 
 const signUp = function () {
   const payload = {
     username: username.value,
-    name : name.value,
     email : email.value,
     password1: password1.value,
     password2: password2.value,
-    age: age.value,
-    money: money.value,
-    salary: salary.value
+    name : name.value,
+    // age: age.value,
+    // money: money.value,
+    // salary: salary.value
   }
   store.signUp(payload)
 }
