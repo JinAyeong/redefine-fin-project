@@ -5,4 +5,4 @@ class ExchangeRatesSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExchangeRates
         fields = '__all__'
-        read_only_fields = ('req_date',)
+        read_only_fields = ('req_dt',)
