@@ -5,6 +5,7 @@ import LogInView from '@/views/LogInView.vue'
 import ArticleView from '@/views/ArticleView.vue'
 import ArticleCreateView from '@/views/ArticleCreateView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import BankMapView from '@/views/BankMapView.vue'
 
 
 const router = createRouter({
@@ -39,6 +40,11 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfileView
+    },
+    {
+      path: '/bankmap',
+      name: 'bankmap',
+      component: BankMapView
     },
   ]
 })

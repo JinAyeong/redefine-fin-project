@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.conf import settings
+from django.http import JsonResponse
 import requests
 from datetime import date
-from .models import ExchangeRates
 from .serializers import ExchangeRatesSerializer
-from django.http import JsonResponse
+from .models import ExchangeRates
+
 
 # Create your views here.
 URL = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON'
@@ -22,6 +24,15 @@ def api_test(request):
     return Response(response)
 
     
+# 문자열에서 쉼표 제거하는 함수
+def parse_float(value):
+    try:
+        return float(value.replace(',', ''))
+    except ValueError:
+        return None
+
+# 해당 국가 base  == 한화 1원
+
 # 문자열에서 쉼표 제거하는 함수
 def parse_float(value):
     try:
@@ -69,13 +80,28 @@ def save_rate(request):
         # 존재한다면
         if rate_instance:
             # 갱신 날짜 체크 -> 최신 데이터로 갱신
-            if rate_instance.req_date != today:
+            if rate_instance.req_dt != today:
                 rate_serializer = ExchangeRatesSerializer(instance=rate_instance, data=rate_data)
                 if rate_serializer.is_valid(raise_exception=True):
-                    rate_serializer.save(req_date=today)
+                    rate_serializer.save(req_dt=today)
         # 존재하지 않으면 추가
         else:
             rate_serializer = ExchangeRatesSerializer(data=rate_data)
             if rate_serializer.is_valid(raise_exception=True):
-                rate_serializer.save(req_date=today)
+                rate_serializer.save(req_dt=today)
     return JsonResponse({'message': 'okay'})
+    
+# DB에 저장된 환율 정보 응답
+@api_view(['GET'])
+def rate_data(request, code):
+    if code == 'ALL':
+        rate_instances = ExchangeRates.objects.all()
+        rates_serializer = ExchangeRatesSerializer(rate_instances, many=True)
+        return Response(rates_serializer.data)
+    else:
+        rate_instance =  ExchangeRates.objects.filter(cur_unit=code).first()
+        if rate_instance:
+            rate_serializer = ExchangeRatesSerializer(rate_instance)
+            return Response(rate_serializer.data)
+        else:
+            return Response({'error': 'Not found'}, status=404)
