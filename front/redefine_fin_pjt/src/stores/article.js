@@ -6,7 +6,7 @@ import { useProfileStore } from './signup'
 export const useArticleStore = defineStore('article', () => {
   const profilestore = useProfileStore()
   const API_URL = profilestore.API_URL
-  const token = profilestore.token
+  // const token = profilestore.token
 
   const articles = ref([])
 
@@ -14,15 +14,16 @@ export const useArticleStore = defineStore('article', () => {
     axios({
       method: 'get',
       url: `${API_URL}/api/v1/articles/`,
-      headers: {
-        Authorizations: `Token ${token.value}`
-      }
+      // headers: {
+      //   Authorizations: `Token ${token.value}`
+      // }
     })
       .then(response => {
         articles.value = response.data
+        console.log(articles)
       })
       .catch(error => console.log(error))
   }
 
-  return { token, API_URL, articles, getArticles }
+  return { API_URL, articles, getArticles }
 }, { persist: true})
