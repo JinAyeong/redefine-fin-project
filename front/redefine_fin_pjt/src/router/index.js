@@ -3,7 +3,9 @@ import HomeView from '@/views/HomeView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import LogInView from '@/views/LogInView.vue'
 import ArticleView from '@/views/ArticleView.vue'
+import ArticleDetail from '@/views/ArticleDetailView.vue'
 import ArticleCreateView from '@/views/ArticleCreateView.vue'
+import ArticleUpdateView from '@/views/ArticleUpdateView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import BankMapView from '@/views/BankMapView.vue'
 
@@ -16,6 +18,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
+    // profile
     {
       path: '/signup',
       name: 'signup',
@@ -27,19 +30,30 @@ const router = createRouter({
       component: LogInView
     },
     {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView
+    },
+    // article
+    {
       path: '/article',
       name: 'article',
       component: ArticleView
     },
     {
-      path: '/create',
-      name: 'create',
+      path: '/article/detail/:id',
+      name: 'articledetail',
+      component: ArticleDetail
+    },
+    {
+      path: '/article/create',
+      name: 'articlecreate',
       component: ArticleCreateView
     },
     {
-      path: '/profile',
-      name: 'profile',
-      component: ProfileView
+      path: '/article/update/:id',
+      name: 'articleupdate',
+      component: ArticleUpdateView
     },
     {
       path: '/bankmap',

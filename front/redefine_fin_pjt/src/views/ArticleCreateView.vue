@@ -14,45 +14,38 @@
 <script setup>
 
 import { ref } from 'vue'
-// import { useArticleStore } from '@/stores/article';
 import { useProfileStore } from '@/stores/profile';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
-
-// const store = useArticleStore()
-const store = useProfileStore()
 
 const title = ref(null)
 const content = ref(null)
+const profilestore = useProfileStore()
+const router = useRouter()
+
 
 const createArticle = function () {
 
     axios({
       method: 'post',
-      url: `${store.API_URL}/articles/`,
+      url: `${profilestore.API_URL}/articles/`,
       data: {
         title: title.value,
-        content: content.value
+        content: content.value,
       },
       headers: {
-        Authorization: `Token ${store.token}`
+        Authorization: `Token ${profilestore.token}`,
       }
     })
       .then(response => {
         console.log('게시글 생성 완료!')
+        router.push({name: 'article'})
       })
       .catch(error => {
         console.log(error)
-        console.log(store.token)
+        console.log(profilestore.token)
       })
   }
-
-// const createArticle = function () {
-//     const payload = {
-//         title: title.value,
-//         content: content.value
-//     }
-//     store.createArticle(payload)
-// }
 
 </script>
 

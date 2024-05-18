@@ -6,7 +6,7 @@ from allauth.account.adapter import DefaultAccountAdapter
 class User(AbstractUser):
     username = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=10)
-    email = models.EmailField(max_length=30)
+    email = models.EmailField(max_length=30, blank=True, null=True)
     # profile_img = models.ImageField(blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     money = models.IntegerField(blank=True, null=True)
@@ -15,6 +15,8 @@ class User(AbstractUser):
     financial_products = models.TextField(blank=True, null=True)
 
     # superuser fields
+    is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'

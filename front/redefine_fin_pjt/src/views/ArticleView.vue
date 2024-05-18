@@ -1,7 +1,7 @@
 <template>
 	<div>
 		 <h1>Article Page</h1>
-		 <button @click="router.push({name: 'create'})">>게시글 작성</button>
+		 <button @click="router.push({name: 'articlecreate'})">>게시글 작성</button>
 		 <ArticleList />
 	</div>
 
