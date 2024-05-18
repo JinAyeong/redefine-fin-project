@@ -54,7 +54,7 @@ if (confirm("게시글을 삭제하시겠습니까?") == true) {
 
 // 게시글 수정 view로 이동
 const articleUpdate = function () {
-  router.push({name: 'articleupdate', params: articleId});
+  router.push({name: 'articleupdate', params: {id: articleId}});
 };
 
 

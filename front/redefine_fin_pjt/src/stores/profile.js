@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
@@ -10,11 +10,11 @@ export const useProfileStore = defineStore('profile', () => {
 
   // 로그인 확인
   const isLogin = computed(() => {
-    if (token.value === null) {
-      return false
-    } else {
-      return true
-    }
+    return token.value !== null
+  })
+
+  watch(token, () => {
+    isLogin.value // 이 부분에서 isLogin 값이 읽혀서 재평가됩니다.
   })
 
   // 회원가입
@@ -54,10 +54,49 @@ export const useProfileStore = defineStore('profile', () => {
         console.log('로그인 성공!')
         console.log(response.data)
         token.value = response.data.key
+        getProfile()
         router.push({name:'home'})
       })
       .catch(error => console.log(error))
   }
 
-  return { API_URL, token, signUp, logIn, isLogin }
+  // 로그아웃
+  const logOut = function () {
+    axios({
+      method: 'post',
+      url: `${API_URL}/accounts/logout/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      }
+    })
+      .then((response) => {
+        alert('로그아웃 완료!')
+        token.value = null
+        userProfile.value = null
+        router.push({name: 'login'})
+      })
+  }
+
+  // 유저 profile 가져오기
+  const userProfile = ref(null)
+  const getProfile = function () {
+      axios({
+          method: 'get',
+          url: `${API_URL}/accounts/profile/`,
+          headers: {
+              Authorization: `Token ${token.value}`
+          },
+      })
+          .then((response) => {
+              userProfile.value = response.data
+              console.log(response.data)
+              console.log('프로필 불러오기 성공!')
+          })
+          .catch((error) => {
+              console.log(error)
+              console.log(profilestore.token)
+          })
+  }
+
+  return { API_URL, token, isLogin, signUp, logIn, logOut, userProfile, getProfile }
 }, {persist: true})

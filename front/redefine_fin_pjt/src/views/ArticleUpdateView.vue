@@ -28,6 +28,7 @@ const article = ref(null)
 const title = ref('')
 const content = ref('')
 
+// 게시글 불러오기
 const loadArticle = async () => {
     try {
         const response = await axios.get(`${articlestore.API_URL}/articles/${articleId}/`, {
@@ -47,11 +48,12 @@ onMounted(() => {
     loadArticle()
 })
 
+// 게시글 수정
 const updateArticle = async () => {
     try {
         await axios({
             method: 'put',
-            url: `${articlestore.API_URL}/articles/${articleId}/`,  // Ensure the trailing slash if required by the backend framework
+            url: `${articlestore.API_URL}/articles/${articleId}/`,
             headers: {
                 Authorization: `Token ${profilestore.token}`,
             },
@@ -61,8 +63,9 @@ const updateArticle = async () => {
             },
         })
         console.log('게시물 수정 완료!')
-        await loadArticle() // Reload the article to get the updated data
-        router.push({ name: 'article' })
+        await loadArticle()
+        router.push({name: 'article'});
+        alert('게시물이 수정되었습니다.')
     } catch (error) {
         console.error('Error updating article:', error)
         if (error.response) {
