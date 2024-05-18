@@ -1,25 +1,24 @@
-# from django.shortcuts import get_object_or_404
-# from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 
-# from rest_framework.response import Response
-# from rest_framework.decorators import api_view, permission_classes
-# from rest_framework.permissions import IsAuthenticated
-# from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 
-# from dj_rest_auth.views import UserDetailsView
+from dj_rest_auth.views import UserDetailsView
 
-# from .models import User
-# from .serializers import ProfileSerializer, UserInfoserializer, CustomRegisterSerializer
+from .models import User
+from .serializers import ProfileSerializer, UserInfoserializer, CustomRegisterSerializer
 
 
-# # 회원정보 조회
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def profile(request, username):
-#     if request.user.username == username:
-#         user = get_object_or_404(get_user_model(), username=username)
-#         serializer = ProfileSerializer(user)
-#         return Response(serializer.data)
+# 회원정보 조회
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def profile(request):
+    user = request.user
+    serializer = ProfileSerializer(user)
+    return Response(serializer.data)
 
 
 # # 회원정보 수정

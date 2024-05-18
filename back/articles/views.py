@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import status
@@ -25,6 +26,7 @@ def article_list(request):
 
 # 게시글 상세 조회 / 수정 / 삭제
 api_view(['GET', 'PUT', 'DELETE'])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def article_detail(request, article_pk):
     # article = Article.objects.get(pk=article_pk)

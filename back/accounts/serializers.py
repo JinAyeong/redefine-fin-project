@@ -8,18 +8,18 @@ UserModel = get_user_model()
 
 
 
-# class ProfileSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('id', 'username', 'name', 'email', 'profile_img',)
-#         read_only_fields = ('id', 'username', 'name',)
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'name', 'email', 'profile_img',)
+        read_only_fields = ('id', 'username', 'name',)
 
 
-# class UserInfoserializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = '__all__'
-#         read_only_fields = ('id', 'username', 'name',)
+class UserInfoserializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+        read_only_fields = ('id', 'username', 'name',)
 
 
 # 회원가입 custom serailizer
