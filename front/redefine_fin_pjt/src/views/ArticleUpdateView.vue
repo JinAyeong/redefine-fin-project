@@ -24,22 +24,21 @@ const router = useRouter()
 const articlestore = useArticleStore()
 const profilestore = useProfileStore()
 
-// const articleId = route.params.id
-// const article = ref(null)
 const articleId = route.params.id
 const article = ref(
     articlestore.articles.find((product) => product.id == articleId)
 )
-
-console.log(article.value.title)
 const title = ref(article.value.title)
 const content = ref(article.value.content)
+// const article = ref(null)
+// const title = ref(null)
+// const content = ref(null)
 
 // 게시물 수정
 const updateArticle = function () {
     axios({
         method: 'put',
-        url: `${articlestore.API_URL}/articles/${articleId}`,
+        url: `${articlestore.API_URL}/articles/${articleId}/`,
         headers: {
             Authorization: `Token ${profilestore.token}`
         },
@@ -50,9 +49,10 @@ const updateArticle = function () {
     })
         .then((response) => {
             console.log('게시물 수정 완료!')
-            router.push({name: 'articledetail', params: articleId})
+            router.push({name: 'articledetail', params: {id: articleId}})
         })
         .catch((error) => {
+            console.log(profilestore.token)
             console.log(error)
         })
 }

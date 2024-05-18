@@ -59,5 +59,28 @@ export const useProfileStore = defineStore('profile', () => {
       .catch(error => console.log(error))
   }
 
-  return { API_URL, token, signUp, logIn, isLogin }
+  // 로그아웃
+  const logOut = function () {
+    axios({
+      method: 'post',
+      url: `${API_URL}/accounts/logout/`,
+      headers: {
+        Authorization: `Token ${token.value}`
+      },
+    })
+      .then((response) => {
+        // localStorage.removeItem('account')
+        token.value = null
+        console.log('로그아웃 완료!')
+        router.push({name: 'login'})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+
+
+
+  return { API_URL, token, isLogin, signUp, logIn, logOut }
 }, {persist: true})

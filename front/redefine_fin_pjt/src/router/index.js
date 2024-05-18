@@ -41,7 +41,7 @@ const router = createRouter({
       component: ArticleView
     },
     {
-      path: '/article/detail/:id',
+      path: '/article/:id',
       name: 'articledetail',
       component: ArticleDetail
     },
@@ -51,7 +51,7 @@ const router = createRouter({
       component: ArticleCreateView
     },
     {
-      path: '/article/update/:id',
+      path: '/article/:id/update',
       name: 'articleupdate',
       component: ArticleUpdateView
     },
