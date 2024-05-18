@@ -24,7 +24,7 @@ def article_list(request):
         
 
 # 게시글 상세 조회 / 수정 / 삭제
-api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def article_detail(request, article_pk):
     # article = Article.objects.get(pk=article_pk)
@@ -35,13 +35,13 @@ def article_detail(request, article_pk):
         serializer = ArticleDetailSerializer(article)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-    elif request.method == 'PUT':
+    elif request.method == 'PUT' and request.user == article.user:
         serializer = ArticleDetailSerializer(article, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         
-    elif request.method == 'DELETE':
+    elif request.method == 'DELETE' and request.user == article.user:
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
