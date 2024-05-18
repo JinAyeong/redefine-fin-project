@@ -1,127 +1,147 @@
 <template>
-  <div>
     <div>
-      <h1>🔍 주변 은행 검색</h1>
+      <div>
+        <h1>🔍 주변 은행 검색 🔎</h1>
+        <h3> ✅현재 내 주변 은행을 검색해보세요 !  </h3>
+      </div>
+      <div class="content-map">
+        <form class="search-form" @submit.prevent="search">
+          <select
+            class="form-select"
+            name="location1"
+            id="location1"
+            v-model="mainRegion"
+            @change="updateSubRegion"
+          >
+            <option :value="null" selected hidden>시 / 도 를 선택해주세요</option>
+            <option v-for="locate1 in store.sectionList" :value="locate1" :key="locate1">
+              {{ locate1 }}
+            </option>
+          </select>
+          <select
+            class="form-select"
+            name="location2"
+            id="location2"
+            v-model="subRegion"
+          >
+            <option :value="null" selected hidden>
+              시 / 군 / 구 를 선택해주세요
+            </option>
+            <option v-for="locate2 in store.detailList[mainRegion]" :value="locate2" :key="locate2">
+              {{ locate2 }}
+            </option>
+          </select>
+          <select class="form-select" name="bank" id="bank" v-model="selectedBank">
+            <option :value="null" selected hidden>은행을 선택해주세요</option>
+            <option v-for="bank in store.banks" :value="bank" :key="bank">
+              {{ bank }}
+            </option>
+          </select>
+          <button class="btn btn-info" type="submit">검색</button>
+        </form>
+        <div id="map" style="width: 70%; height: 600px"></div>
+      </div>
     </div>
-    <div class="content-map">
-      <form @submit.prevent="search" class="search-form">
-        <select
-          class="form-select"
-          name="location1"
-          id="location1"
-          v-model="selectedSection"
-        >
-          <option :value="null" selected hidden>시 / 도 를 선택해주세요</option>
-          <option v-for="locate1 in store.sectionList" :value="locate1">
-            {{ locate1 }}
-          </option>
-        </select>
-        <select
-          class="form-select"
-          name="location2"
-          id="location2"
-          v-model="selectedDetail"
-        >
-          <option :value="null" selected hidden>
-            시 / 군 / 구 를 선택해주세요
-          </option>
-          <option v-for="locate2 in store.detailList[selectedSection]" :value="locate2">
-            {{ locate2 }}
-          </option>
-        </select>
-        <select class="form-select" name="bank" id="bank" v-model="selectedBank">
-          <option :value="null" selected hidden>은행을 선택해주세요</option>
-          <option v-for="bank in store.banks" :value="bank">
-            {{ bank }}
-          </option>
-        </select>
-        검색어 : {{ searchKeyword }} <input class="btn btn-info" type="submit" value="검색" />
-      </form>
-
-      <div id="map" style="width: 70%; height: 600px"></div>
-    </div>
-  </div>
-</template>
-
-<script setup>
-import { ref, onMounted, computed } from "vue";
-import { usePlacesStore } from "@/stores/place";
-
-const store = usePlacesStore();
-
-const selectedSection = ref("");
-const selectedDetail = ref("");
-const selectedBank = ref("");
-
-const API_KEY = '1766462dae4b78aff86eb4373ecb1bc4'
-
-// computed 속성을 사용하여 세 개의 값을 하나의 문자열로 결합
-const searchKeyword = computed(() => {
-  return `${selectedSection.value} ${selectedDetail.value} ${selectedBank.value}`.trim();
-});
-
-
-onMounted(() => {
-  if (window.kakao && window.kakao.maps) {
-    initMap();
-  } else {
-    const script = document.createElement("script");
-    /* global kakao */
-    script.onload = () => kakao.maps.load(initMap);
-    script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${API_KEY}&libraries=services`;
-    document.head.appendChild(script);
-  }
-});
-
-let ps
-
-const search = () => {
-  if (selectedBank.value) {
-    // 선택된 은행이 있는 경우에만 검색 수행
-    ps.\(searchKeyword.value, placesSearchCB, { useMapBounds: true });
-  } else {
-    alert("은행을 선택해주세요.");
-  }
-};
-
-const initMap = () => {
-  var mapContainer = document.getElementById('map');
-  var mapOption = {
-    center: new kakao.maps.LatLng(37.566826, 126.9786567), // 서울시청 좌표
-    level: 5 // 지도의 확대 레벨
-  };  
+  </template>
   
-  var map = new kakao.maps.Map(mapContainer, mapOption); 
-  var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-  ps = new kakao.maps.services.Places(map); 
-
-  // 검색 결과를 받아와서 마커를 표시하는 콜백함수
-  const placesSearchCB = (data, status, pagination) => {
-    if (status === kakao.maps.services.Status.OK) {
-      for (var i=0; i<data.length; i++) {
-        displayMarker(data[i]);    
-      }       
+  <script setup>
+  import { ref, onMounted } from "vue";
+  import { usePlacesStore } from "@/stores/place";
+  
+  const store = usePlacesStore();
+  
+  const mainRegion = ref(null);
+  const subRegion = ref(null);
+  const selectedBank = ref(null);
+  
+  const searchword = ref(null);
+  const API_KEY = '1766462dae4b78aff86eb4373ecb1bc4';
+  
+  const search = () => {
+    searchword.value = `${mainRegion.value || ''} ${subRegion.value || ''} ${selectedBank.value || ''}`.trim();
+    if (searchword.value.length === 0) {
+      alert("지역과 은행을 선택해주세요.");
+      return;
+    }
+  
+    // Kakao 지도 API 스크립트 로드
+    if (window.kakao && window.kakao.maps) {
+      // 이미 kakao 객체가 정의되어 있을 경우 initMap 호출
+      initMap(searchword.value);
+    } else {
+      // kakao 객체가 정의되어 있지 않으면 스크립트 로드
+      const script = document.createElement("script");
+      script.onload = () => initMap(searchword.value); // 로드 후 initMap 호출
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${API_KEY}&libraries=services`;
+      document.head.appendChild(script);
     }
   };
-    // 키워드로 장소를 검색합니다
-    ps.keywordSearch(searchKeyword.value, placesSearchCB); 
-
-
-  // 마커를 생성하고 지도에 표시하는 함수
-  const displayMarker = (place) => {
-    var marker = new kakao.maps.Marker({
-      map: map,
-      position: new kakao.maps.LatLng(place.y, place.x) 
-    });
-
-    kakao.maps.event.addListener(marker, 'click', function() {
-      infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-      infowindow.open(map, marker);
+  
+  const initMap = (keyword) => {
+    // kakao 객체가 정의되어 있는지 확인
+    if (typeof kakao === 'undefined' || !kakao.maps) {
+      console.error('Kakao 지도 API가 로드되지 않았습니다.');
+      return;
+    }
+  
+    kakao.maps.load(() => {
+      var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+      var mapContainer = document.getElementById("map"),
+        mapOption = {
+          center: new kakao.maps.LatLng(36.2683, 127.6358), // 대한민국 중심 좌표
+          level: 3, // 확대 레벨 
+        };
+  
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+      map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
+      var ps = new kakao.maps.services.Places(map);
+      ps.keywordSearch(keyword, placesSearchCB);
+  
+      function placesSearchCB(data, status, pagination) {
+        if (status === kakao.maps.services.Status.OK) {
+          var bounds = new kakao.maps.LatLngBounds();
+          for (var i = 0; i < data.length; i++) {
+            displayMarker(data[i]);
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          }
+          map.setBounds(bounds);
+        }
+      }
+  
+      function displayMarker(place) {
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(place.y, place.x),
+        });
+  
+        kakao.maps.event.addListener(marker, "click", function () {
+          infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + "</div>");
+          infowindow.open(map, marker);
+        });
+      }
     });
   };
-};
-</script>
-
-<style scoped>
-/* 스타일링 추가 */
-</style>
+  
+  // 페이지가 로드될 때 initMap 호출
+  onMounted(() => {
+    // 기본 키워드로 초기화
+    initMap("은행");
+  });
+  </script>
+  
+  <style scoped>
+  /* 스타일링 추가 */
+  .search-form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-form .form-select {
+    margin-right: 10px;
+  }
+  
+  .btn-info {
+    background-color: rgb(253, 253, 200);
+  }
+  </style>
+  
