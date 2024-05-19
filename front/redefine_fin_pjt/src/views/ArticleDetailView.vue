@@ -9,12 +9,23 @@
         <p>제목 : {{ article.title }}</p>
         <p>내용 : {{ article.content }}</p>
 
+        <hr>
+        <textarea v-model.trim="commentContent"></textarea><br>
+        <button @click="createComment">댓글 작성</button>
+        <hr>
+        <h2 v-if="comments.length">댓글 목록</h2>
+        <div v-for="comment in comments" :key="comment.id">
+            <!-- <p>{{ comment }}</p> -->
+            <p>{{ comment.user.username }} - {{ comment.content }}</p>
+            <button v-if="isCommentAuthor(comment)" @click="deleteComment(comment.id)">댓글 삭제</button>
+            <hr>
+        </div>
     </div>
 </template>
 
 <script setup>
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import { useArticleStore } from '@/stores/article';
@@ -58,6 +69,80 @@ const articleUpdate = function () {
 };
 
 
+// comment 관련
+const commentContent = ref('')
+const comments = ref([])
+// =================================================================================
+// comment 관련
+
+// 댓글 생성
+const createComment = () => {
+  axios({
+    method: 'post',
+    url: `http://127.0.0.1:8000/articles/${articleId}/comments/create/`,
+    headers: {
+      Authorization: `Token ${profilestore.token}`
+    },
+    data: {
+      content: commentContent.value
+    }
+  })
+  .then((response) => {
+    comments.value.push(response.data)
+    commentContent.value = ''
+  })
+  .catch((error) => {
+    console.log(error)
+    // console.error('댓글 작성 실패:', error)
+    // window.alert('댓글 작성 중 에러가 발생했습니다.')
+  })
+}
+
+const isCommentAuthor = (comment) => {
+//   console.log('Current user:', profilestore.userName)
+//   console.log('Comment user:', comment.user.username)
+  return comment.user.username === profilestore.userName
+}
+
+
+const deleteComment = (commentId) => {
+  axios({
+    method: 'delete',
+    url: `http://127.0.0.1:8000/articles/comments/${commentId}/delete/`,
+    headers: {
+      Authorization: `Token ${profilestore.token}`
+    }
+  })
+  .then(() => {
+    comments.value = comments.value.filter(comment => comment.id !== commentId)
+  })
+  .catch((error) => {
+    console.log(error)
+    // console.error('댓글 삭제 실패:', error)
+    // window.alert('댓글 삭제 중 에러가 발생했습니다.')
+  })
+}
+
+// 댓글 목록 가져오기
+const fetchComments = () => {
+  axios({
+    method: 'get',
+    url: `http://127.0.0.1:8000/articles/${articleId}/comments/`,
+    headers: {
+      Authorization: `Token ${profilestore.token}`
+    }
+  })
+  .then((response) => {
+    comments.value = response.data
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
+
+onMounted(() => {
+  fetchComments()
+})
 </script>
 
 <style scoped>
