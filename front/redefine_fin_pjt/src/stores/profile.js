@@ -60,6 +60,8 @@ export const useProfileStore = defineStore('profile', () => {
         userName.value = username
         console.log('로그인 성공!')
         console.log(token.value)
+        getProfile()
+        console.log(userProfile.value)
         router.push({name:'home'})
       })
       .catch(error => {

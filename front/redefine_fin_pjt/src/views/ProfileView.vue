@@ -17,18 +17,13 @@
 
 <script setup>
 
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { useProfileStore } from '@/stores/profile';
 
 const router = useRouter()
 const profilestore = useProfileStore()
-const userProfile = ref(null)
-
-onMounted(() => {
-    profilestore.getProfile
-    userProfile.value = profilestore.userProfile
-})
+const userProfile = profilestore.userProfile
 
 const goUpdateProfile = function () {
     router.push({name: 'profileupdate'})
