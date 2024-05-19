@@ -25,6 +25,7 @@
             </div>
             <input type="submit" value="회원정보 수정">
         </form>
+        <button @click="profilestore.signOut">회원탈퇴</button>
     </div>
 </template>
 
@@ -52,6 +53,7 @@ const profileUpdate = function () {
     }
     profilestore.profileUpdate(payload)
 }
+
 
 </script>
 
