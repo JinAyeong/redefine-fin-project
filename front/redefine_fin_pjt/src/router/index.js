@@ -1,15 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
+// home
 import HomeView from '@/views/HomeView.vue'
+// accounts
 import SignUpView from '@/views/SignUpView.vue'
 import LogInView from '@/views/LogInView.vue'
+import ProfileView from '@/views/ProfileView.vue'
+import ProfileUpdateView from '@/views/ProfileUpdateView.vue'
+import ProfileUpdatePasswordView from '@/views/ProfileUpdatePasswordView.vue'
+// article
 import ArticleView from '@/views/ArticleView.vue'
 import ArticleDetail from '@/views/ArticleDetailView.vue'
 import ArticleCreateView from '@/views/ArticleCreateView.vue'
 import ArticleUpdateView from '@/views/ArticleUpdateView.vue'
-import ProfileView from '@/views/ProfileView.vue'
-import ProfileUpdateView from '@/views/ProfileUpdateView.vue'
-import ProfileUpdatePasswordView from '@/views/ProfileUpdatePasswordView.vue'
+// bankmap
 import BankMapView from '@/views/BankMapView.vue'
+// deposit
+import DepositView from '@/views/DepositView.vue'
+
 
 
 const router = createRouter({
@@ -20,7 +28,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
-    // profile
+    // accounts
     {
       path: '/signup',
       name: 'signup',
@@ -67,10 +75,17 @@ const router = createRouter({
       name: 'articleupdate',
       component: ArticleUpdateView
     },
+    // bankmap
     {
       path: '/bankmap',
       name: 'bankmap',
       component: BankMapView
+    },
+    // deposit
+    {
+      path: '/deposit',
+      name: 'deposit',
+      component: DepositView
     },
   ]
 })
