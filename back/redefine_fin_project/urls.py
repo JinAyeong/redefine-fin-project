@@ -19,12 +19,17 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # article CRUD
     path('articles/', include('articles.urls')),
 
+    # 로그인/로그아웃/회원가입
     path('accounts/', include('dj_rest_auth.urls')),
     path('accounts/registration/', include('dj_rest_auth.registration.urls')),
 
+    # 프로필 조회
+    path('accounts/profile/', include('accounts.urls')),
+
     # path('finances/', include('finances.urls')),
     path('exchange/', include('exchange.urls')),
-    # path('finances/', include('finances.urls')),
 ]

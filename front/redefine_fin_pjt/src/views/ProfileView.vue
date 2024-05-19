@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="profilestore.userName">
         <h1>Profile Page</h1>
         <p>아이디 : {{ userProfile.username }}</p>
         <p>이메일 : {{ userProfile.email }}</p>
@@ -17,13 +17,18 @@
 
 <script setup>
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { useProfileStore } from '@/stores/profile';
 
 const router = useRouter()
 const profilestore = useProfileStore()
 const userProfile = profilestore.userProfile
+
+// onMounted(() => {
+//   profilestore.getProfile
+//   userProfile.value = profilestore.userProfile
+// });
 
 const goUpdateProfile = function () {
     router.push({name: 'profileupdate'})
