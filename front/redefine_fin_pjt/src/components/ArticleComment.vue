@@ -2,7 +2,7 @@
     <div>
       <p>
         {{ comment.username }} 님의 댓글
-        <span style="font-size: smaller; color: gray; font-weight: lighter">
+        <span>
           {{ comment.created_at.slice(0, 10) }}
         </span>
       </p>

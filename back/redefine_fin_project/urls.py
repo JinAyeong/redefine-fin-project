@@ -30,6 +30,6 @@ urlpatterns = [
     # 프로필 조회
     path('accounts/profile/', include('accounts.urls')),
 
-    # path('finances/', include('finances.urls')),
+    path('finances/', include('finances.urls')),
     path('exchange/', include('exchange.urls')),
 ]
