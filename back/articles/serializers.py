@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Article, Comment
+from accounts.serializers import ProfileSerializer
 
 # 게시글 리스트 조회
 class ArticleListSerializer(serializers.ModelSerializer):
@@ -20,8 +21,15 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
         read_only_fields = ('user', 'like_users')
 
 
+# class CommentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Comment
+#         fields = '__all__'
+#         read_only_fields = ('article',)
+
 class CommentSerializer(serializers.ModelSerializer):
+    user = ProfileSerializer(read_only=True)
     class Meta:
         model = Comment
         fields = '__all__'
-        read_only_fields = ('article',)
+        read_only_fields = ('user', 'article', 'like_users')
