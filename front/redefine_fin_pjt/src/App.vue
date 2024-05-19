@@ -1,6 +1,7 @@
 <template>
   <div>
     <nav>
+      <button @click="goBack">뒤로가기</button>
       <RouterLink :to="{name : 'article'}">게시판</RouterLink>
       <RouterLink :to="{name : 'home'}">메인페이지</RouterLink>
       <RouterLink :to="{name : 'bankmap'}">지도</RouterLink>
@@ -21,10 +22,16 @@
 </template>
 
 <script setup>
+  import { useRouter } from 'vue-router';
   import { RouterLink } from 'vue-router'
   import { useProfileStore } from './stores/profile';
+  const router = useRouter()
   const profilestore = useProfileStore()
   
+  const goBack = function () {
+    router.go(-1)
+  }
+
 </script>
 
 <style scoped>

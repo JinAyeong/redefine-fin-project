@@ -46,9 +46,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     # social login 필요 시 추가
-    # 'django.contrib.sites',
-    # 'allauth.socialaccount',
-    # 'dj_rest_auth.registration',
+    'django.contrib.sites',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -174,3 +174,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
 ACCOUNT_ADAPTER  = 'accounts.adapter.CustomAccountAdapter'
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'

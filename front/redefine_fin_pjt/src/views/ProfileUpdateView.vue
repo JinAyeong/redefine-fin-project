@@ -1,11 +1,8 @@
 <template>
     <div>
-        <h1>프로필 수정</h1>
-        <form @submit.prevent="signUp">
-            <div>
-                <label for="username">username : </label>
-                <input type="text" v-model.trim="username" id="username">
-            </div>
+        <h1>회원정보 수정</h1>
+        <form @submit.prevent="profileUpdate">
+            <p>username : {{ userProfile.username }}</p>
             <div>
                 <label for="name">name : </label>
                 <input type="text" v-model.trim="name" id="name">
@@ -13,14 +10,6 @@
             <div>
                 <label for="email">email : </label>
                 <input type="text" v-model.trim="email" id="email">
-            </div>
-            <div>
-                <label for="password1">password : </label>
-                <input type="password" v-model.trim="password1" id="password1">
-            </div>
-            <div>
-                <label for="password2">password confirmation : </label>
-                <input type="password" v-model.trim="password2" id="password2">
             </div>
             <div>
                 <label for="age">age : </label>
@@ -34,12 +23,35 @@
                 <label for="salary">salary : </label>
                 <input type="number" v-model.trim="salary" id="salary">
             </div>
-            <input type="submit" value="SignUp">
+            <input type="submit" value="회원정보 수정">
         </form>
     </div>
 </template>
 
 <script setup>
+
+import { ref } from 'vue'
+import { useProfileStore } from '@/stores/profile';
+
+const profilestore = useProfileStore()
+const userProfile = profilestore.userProfile
+
+const name = ref(userProfile.name)
+const email = ref(userProfile.email)
+const age = ref(userProfile.age)
+const money = ref(userProfile.money)
+const salary = ref(userProfile.salary)
+
+const profileUpdate = function () {
+    const payload = {
+        name: name.value,
+        email: email.value,
+        age: age.value,
+        money: money.value,
+        salary: salary.value
+    }
+    profilestore.profileUpdate(payload)
+}
 
 </script>
 

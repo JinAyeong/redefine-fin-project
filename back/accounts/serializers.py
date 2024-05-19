@@ -29,7 +29,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     #     allow_blank=True,
     #     max_length=20
     # )
-    name = serializers.CharField(max_length=10)
+    name = serializers.CharField(required=False,allow_blank=True,max_length=10)
     # email = serializers.EmailField(
     #     required=False,
     #     max_length=30
