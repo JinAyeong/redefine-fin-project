@@ -16,7 +16,7 @@
 import { ref } from 'vue'
 import { useProfileStore } from '@/stores/profile';
 
-const store = useProfileStore()
+const profilestore = useProfileStore()
 
 const username = ref(null)
 const password = ref(null)
@@ -26,7 +26,7 @@ const logIn = function () {
         username: username.value,
         password: password.value
     }
-    store.logIn(payload)
+    profilestore.logIn(payload)
 }
 
 </script>
