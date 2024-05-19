@@ -91,6 +91,11 @@ export const useProfileStore = defineStore('profile', () => {
       })
   }
 
+  // 회원정보 수정
+  const profileUpdate = function (payload) {
+
+  }
+
   // 유저 profile 가져오기
   const getProfile = function () {
     axios({
@@ -110,7 +115,7 @@ export const useProfileStore = defineStore('profile', () => {
       })
   }
 
-  return { API_URL, token, userName, isLogin, signUp, logIn, logOut, userProfile, getProfile }
+  return { API_URL, token, userName, isLogin, signUp, logIn, logOut, profileUpdate, userProfile, getProfile }
 }, {
   persist: true
   // persist: {storage: localStorage}
