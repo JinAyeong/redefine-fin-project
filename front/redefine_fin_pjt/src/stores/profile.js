@@ -7,14 +7,20 @@ export const useProfileStore = defineStore('profile', () => {
   const router = useRouter()
   const token = ref(null)
   const API_URL = 'http://127.0.0.1:8000'
+  const userProfile = ref(null)
+  const userName = ref(null)
 
   // 로그인 확인
   const isLogin = computed(() => {
     return token.value !== null
   })
 
-  watch(token, () => {
-    isLogin.value // 이 부분에서 isLogin 값이 읽혀서 재평가됩니다.
+  watch(token, (newToken) => {
+    if (newToken) {
+      localStorage.setItem('token', newToken)
+    } else {
+      localStorage.removeItem('token')
+    }
   })
 
   // 회원가입
@@ -32,7 +38,6 @@ export const useProfileStore = defineStore('profile', () => {
       console.log('회원가입 성공')
       const password = password1
       logIn({username, password})
-      router.push({name:'home'})
     })
     .catch((error) => {
       console.log(error)
@@ -51,10 +56,10 @@ export const useProfileStore = defineStore('profile', () => {
       }
     })
       .then(response => {
-        console.log('로그인 성공!')
-        console.log(response.data)
         token.value = response.data.key
-        getProfile()
+        userName.value = username
+        console.log('로그인 성공!')
+        console.log(token.value)
         router.push({name:'home'})
       })
       .catch(error => {
@@ -75,31 +80,36 @@ export const useProfileStore = defineStore('profile', () => {
         alert('로그아웃 완료!')
         token.value = null
         userProfile.value = null
+        userName.value = null
+        localStorage.removeItem('profile')
         router.push({name: 'login'})
+      })
+      .catch(error => {
+        console.log(error)
       })
   }
 
   // 유저 profile 가져오기
-  const userProfile = ref(null)
   const getProfile = function () {
-      axios({
-          method: 'get',
-          url: `${API_URL}/accounts/profile/`,
-          headers: {
-              Authorization: `Token ${token.value}`
-          },
+    axios({
+      method: 'get',
+      url: `${API_URL}/accounts/profile/`,
+      headers: {
+          Authorization: `Token ${token.value}`
+      },
+    })
+      .then((response) => {
+        userProfile.value = response.data
+        console.log(userProfile.value)
+        console.log('프로필 불러오기 성공!')
       })
-          .then((response) => {
-              userProfile.value = response.data
-              console.log(response.data)
-              console.log('프로필 불러오기 성공!')
-          })
-          .catch((error) => {
-              console.log(error)
-              console.log(profilestore.token)
-          })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
-  return { API_URL, token, isLogin, signUp, logIn, logOut, userProfile, getProfile }
+  return { API_URL, token, userName, isLogin, signUp, logIn, logOut, userProfile, getProfile }
 }, {
-  persist: true})
+  persist: true
+  // persist: {storage: localStorage}
+})

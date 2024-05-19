@@ -9,7 +9,7 @@
         <p>연봉 : {{ userProfile.salary }}</p>
         <p v-if="userProfile.financial_products">가입 상품 리스트 : {{ userProfile.financial_products }}</p>
         <p v-else>아직 가입한 상품이 없습니다.</p>
-        <button>회원정보 수정</button>
+        <button @click="goUpdateProfile">회원정보 수정</button>
         <button>비밀번호 변경</button>
         <button>내가 쓴 글 보기</button>
     </div>
@@ -17,14 +17,22 @@
 
 <script setup>
 
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { useProfileStore } from '@/stores/profile';
 
 const router = useRouter()
 const profilestore = useProfileStore()
-const userProfile = profilestore.userProfile
+const userProfile = ref(null)
 
+onMounted(() => {
+    profilestore.getProfile
+    userProfile.value = profilestore.userProfile
+})
+
+const goUpdateProfile = function () {
+    router.push({name: 'profileupdate'})
+}
 
 </script>
 

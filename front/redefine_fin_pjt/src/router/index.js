@@ -7,6 +7,7 @@ import ArticleDetail from '@/views/ArticleDetailView.vue'
 import ArticleCreateView from '@/views/ArticleCreateView.vue'
 import ArticleUpdateView from '@/views/ArticleUpdateView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import ProfileUpdateView from '@/views/ProfileUpdateView.vue'
 import BankMapView from '@/views/BankMapView.vue'
 
 
@@ -33,6 +34,11 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfileView
+    },
+    {
+      path: '/profile/update',
+      name: 'profileupdate',
+      component: ProfileUpdateView
     },
     // article
     {
