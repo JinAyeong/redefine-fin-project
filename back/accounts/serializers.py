@@ -7,18 +7,19 @@ from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 
 
-
+# 회원정보 조회
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         exclude = ('password', 'is_active', 'is_staff', 'is_superuser')
 
 
+# 회원정보 수정
 class UserInfoserializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        read_only_fields = ('id', 'username', 'name',)
+        read_only_fields = ('id', 'username',)
 
 
 # 회원가입 custom serailizer

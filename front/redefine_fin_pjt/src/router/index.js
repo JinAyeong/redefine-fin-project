@@ -8,6 +8,7 @@ import ArticleCreateView from '@/views/ArticleCreateView.vue'
 import ArticleUpdateView from '@/views/ArticleUpdateView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import ProfileUpdateView from '@/views/ProfileUpdateView.vue'
+import ProfileUpdatePasswordView from '@/views/ProfileUpdatePasswordView.vue'
 import BankMapView from '@/views/BankMapView.vue'
 
 
@@ -39,6 +40,11 @@ const router = createRouter({
       path: '/profile/update',
       name: 'profileupdate',
       component: ProfileUpdateView
+    },
+    {
+      path: '/profile/update/password/',
+      name: 'passwordupdate',
+      component: ProfileUpdatePasswordView
     },
     // article
     {
