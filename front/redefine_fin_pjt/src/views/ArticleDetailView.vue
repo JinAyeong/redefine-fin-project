@@ -115,33 +115,11 @@ const toggleLike = () => {
 }
 
 
-// const toggleLike = function () {
-//       axios({
-//         method: 'post',
-//         url: `http://127.0.0.1:8000/articles/${articleId}/likes/`,
-//         headers: {
-//           Authorization: `Token ${profilestore.token}`
-//         }
-//       })
-//         .then((response) => {
-//           let isLiked = response.data.is_liked
-//           if (response.data.is_liked == null) {
-//             isLiked = false
-//           }
-//           isLiked = !isLiked
-//           console.log(isLiked)
-//         })
-//         .catch((error) => {
-//           console.log(error)
-//         })
 
-//   }
-
+// =================================================================================
 // comment 관련
 const commentContent = ref('')
 const comments = ref([])
-// =================================================================================
-// comment 관련
 
 // 댓글 생성
 const createComment = () => {
@@ -186,8 +164,6 @@ const deleteComment = (commentId) => {
   })
   .catch((error) => {
     console.log(error)
-    // console.error('댓글 삭제 실패:', error)
-    // window.alert('댓글 삭제 중 에러가 발생했습니다.')
   })
 }
 
