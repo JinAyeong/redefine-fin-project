@@ -25,9 +25,12 @@
 
 
       <!-- 좋아요 버튼 -->
-      <button @click="toggleLike">
-        <span v-if="!isLiked">좋아요</span>
-        <span v-else>좋아요 취소</span>
+      <button v-if="!isLiked" @click="toggleLike">
+        <span>좋아요</span>
+      </button>
+      <button v-if="isLiked" @click="toggleLike">
+        <span>좋아요 취소</span>
+
       </button>
     </div>
 </template>
@@ -44,7 +47,7 @@ const route = useRoute()
 const router = useRouter()
 const articlestore = useArticleStore()
 const profilestore = useProfileStore()
-
+const isLiked = ref()
 // 해당 article 가져오기
 const articleId = route.params.id
 const article = ref(
@@ -78,8 +81,22 @@ const articleUpdate = function () {
 };
 
 
-// 좋아요 여부를 나타내는 변수
-const isLiked = ref(false)
+
+// 좋아요 상태를 가져오는 함수
+const fetchLikeStatus = () => {
+  axios.get(`http://127.0.0.1:8000/articles/${articleId}/like-status/`, {
+    headers: {
+      Authorization: `Token ${profilestore.token}`
+    }
+  })
+  .then(response => {
+    // 서버에서 받은 좋아요 상태를 반영
+    isLiked.value = response.data.is_liked
+  })
+  .catch(error => {
+    console.error('좋아요 상태 가져오기 실패:', error)
+  })
+}
 
 // 좋아요 토글 함수
 const toggleLike = () => {
@@ -96,6 +113,29 @@ const toggleLike = () => {
     console.error('좋아요 토글 실패:', error)
   })
 }
+
+
+// const toggleLike = function () {
+//       axios({
+//         method: 'post',
+//         url: `http://127.0.0.1:8000/articles/${articleId}/likes/`,
+//         headers: {
+//           Authorization: `Token ${profilestore.token}`
+//         }
+//       })
+//         .then((response) => {
+//           let isLiked = response.data.is_liked
+//           if (response.data.is_liked == null) {
+//             isLiked = false
+//           }
+//           isLiked = !isLiked
+//           console.log(isLiked)
+//         })
+//         .catch((error) => {
+//           console.log(error)
+//         })
+
+//   }
 
 // comment 관련
 const commentContent = ref('')
@@ -169,6 +209,7 @@ const fetchComments = () => {
 }
 
 onMounted(() => {
+  fetchLikeStatus() // 좋아요 상태를 가져옵니다.
   fetchComments()
 })
 </script>
