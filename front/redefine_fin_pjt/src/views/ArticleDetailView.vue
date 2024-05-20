@@ -1,25 +1,34 @@
 <template>
     <div>
-        <h1>디테일페이지</h1>
-        <p v-if="article.created_at === article.updated_at">작성시간 : {{ article.created_at }}</p>
-        <p v-if="article.created_at !== article.updated_at">수정시간 : {{ article.updated_at }}</p>
-        <button @click="deleteArticle">게시물 삭제</button>
-        <button @click="articleUpdate">게시물 수정</button>
-        <p>작성자 : {{ article.user_name }}</p>
-        <p>제목 : {{ article.title }}</p>
-        <p>내용 : {{ article.content }}</p>
+      <h1>디테일페이지</h1>
+      <p v-if="article.created_at === article.updated_at">작성시간 : {{ article.created_at }}</p>
+      <p v-if="article.created_at !== article.updated_at">수정시간 : {{ article.updated_at }}</p>
+      <button @click="deleteArticle">게시물 삭제</button>
+      <button @click="articleUpdate">게시물 수정</button>
+      <p>작성자 : {{ article.user_name }}</p>
+      <p>제목 : {{ article.title }}</p>
+      <p>내용 : {{ article.content }}</p>
+      <hr>
 
-        <hr>
-        <textarea v-model.trim="commentContent"></textarea><br>
-        <button @click="createComment">댓글 작성</button>
-        <hr>
-        <h2 v-if="comments.length">댓글 목록</h2>
-        <div v-for="comment in comments" :key="comment.id">
-            <!-- <p>{{ comment }}</p> -->
-            <p>{{ comment.user.username }} - {{ comment.content }}</p>
-            <button v-if="isCommentAuthor(comment)" @click="deleteComment(comment.id)">댓글 삭제</button>
-            <hr>
-        </div>
+
+      <!-- 댓글  -->
+      <textarea v-model.trim="commentContent"></textarea><br>
+      <button @click="createComment">댓글 작성</button>
+      <hr>
+      <h2 v-if="comments.length">댓글 목록</h2>
+      <div v-for="comment in comments" :key="comment.id">
+          <!-- <p>{{ comment }}</p> -->
+          <p>{{ comment.user.username }} - {{ comment.content }}</p>
+          <button v-if="isCommentAuthor(comment)" @click="deleteComment(comment.id)">댓글 삭제</button>
+          <hr>
+      </div>
+
+
+      <!-- 좋아요 버튼 -->
+      <button @click="toggleLike">
+        <span v-if="!isLiked">좋아요</span>
+        <span v-else>좋아요 취소</span>
+      </button>
     </div>
 </template>
 
@@ -68,6 +77,25 @@ const articleUpdate = function () {
   router.push({name: 'articleupdate', params: {id: articleId}});
 };
 
+
+// 좋아요 여부를 나타내는 변수
+const isLiked = ref(false)
+
+// 좋아요 토글 함수
+const toggleLike = () => {
+  axios.post(`http://127.0.0.1:8000/articles/${articleId}/likes/`, {}, {
+    headers: {
+      Authorization: `Token ${profilestore.token}`
+    }
+  })
+  .then(response => {
+    // 서버에서 받은 좋아요 상태를 반영
+    isLiked.value = response.data.is_liked
+  })
+  .catch(error => {
+    console.error('좋아요 토글 실패:', error)
+  })
+}
 
 // comment 관련
 const commentContent = ref('')
