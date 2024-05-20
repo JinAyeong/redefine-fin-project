@@ -7,7 +7,7 @@ class DepositProducts(models.Model):
     kor_co_nm = models.TextField(null=True)      # 금융회사명
     fin_prdt_nm = models.TextField(null=True)    # 금융 상품명
     etc_note = models.TextField(null=True)       # 금융 상품 설명
-    join_deny = models.IntegerField(null=True)   # 가입 제산 (1:제한없음, 2:서민전용, 3:일부제한)
+    join_deny = models.IntegerField(null=True)   # 가입 제한 (1:제한없음, 2:서민전용, 3:일부제한)
     join_member = models.TextField(null=True)    # 가입대상
     join_way = models.TextField(null=True)       # 가입 방법
     spcl_cnd = models.TextField(null=True)       # 우대조건
