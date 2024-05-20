@@ -48,23 +48,21 @@
   </div>
 </template>
 
-
 <script>
-import { ref } from 'vue';
 import axios from 'axios';
 
 export default {
   data() {
     return {
-      exchange_vals: [], // 데이터를 저장할 배열을 data 속성으로 추가
+      exchange_vals: [],
       loading: false,
       amount: 0,
       from_currency: '',
       to_currency: '',
+      rate_filter: 'deal_bas_r',
       result: null,
     };
   },
-  // 옵션 오름차순 정렬
   computed: {
     sortedExchangeVals() {
       return this.exchange_vals.slice().sort((a, b) => {
@@ -75,24 +73,37 @@ export default {
     }
   },
   mounted() {
-    this.loading = true;
-    // Django API에 GET 요청 보내기
-    axios.get('http://127.0.0.1:8000/exchange/')
-      .then(res => {
-        this.exchange_vals = res.data; // 데이터를 data 속성에 할당
-        this.loading = false;
-        console.log(this.exchange_vals); // 데이터가 잘 받아와졌는지 확인
-      })
-      .catch(error => {
-        console.error('에러 발생:', error);
-        this.loading = false;
-      });
+    this.updateExchangeRates();
   },
   methods: {
+    fetchExchangeRates() {
+      this.loading = true;
+      axios.get('http://127.0.0.1:8000/exchange/')
+        .then(res => {
+          this.exchange_vals = res.data;
+          this.loading = false;
+        })
+        .catch(error => {
+          console.error('에러 발생:', error);
+          this.loading = false;
+        });
+    },
+    updateExchangeRates() {
+      this.loading = true;
+      return axios.get('http://127.0.0.1:8000/exchange/save_rate/')
+        .then(res => {
+          console.log('환율 정보가 업데이트되었습니다.');
+          return this.fetchExchangeRates();
+        })
+        .catch(error => {
+          console.error('환율 정보 업데이트 중 에러 발생:', error);
+          this.loading = false;
+        });
+    },
     convertCurrency() {
-      const fromRate = this.exchange_vals.find(val => val.cur_unit === this.from_currency).deal_bas_r;
-      const toRate = this.exchange_vals.find(val => val.cur_unit === this.to_currency).deal_bas_r;
-      this.result = ((this.amount * fromRate) / toRate).toFixed(2)
+      const fromRate = this.exchange_vals.find(val => val.cur_unit === this.from_currency)[this.rate_filter];
+      const toRate = this.exchange_vals.find(val => val.cur_unit === this.to_currency)[this.rate_filter];
+      this.result = ((this.amount * fromRate) / toRate).toFixed(2);
     },
     getCurrencyName(unit) {
       const currency = this.exchange_vals.find(val => val.cur_unit === unit);
