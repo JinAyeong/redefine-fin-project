@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>정기 예금 상품</h2>
-    <DepositList />
+    <h2>적금 상품</h2>
+    <SavingList />
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 
 import { ref, onMounted } from 'vue'
 import { useDepositStore } from '@/stores/deposit';
-import DepositList from '@/components/DepositList.vue';
+import SavingList from '@/components/SavingList.vue';
 
 const depositstore = useDepositStore()
 

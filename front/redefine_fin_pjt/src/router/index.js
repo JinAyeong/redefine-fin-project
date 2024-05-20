@@ -16,8 +16,12 @@ import ArticleUpdateView from '@/views/ArticleUpdateView.vue'
 // bankmap
 import BankMapView from '@/views/BankMapView.vue'
 // deposit
+import FinanceView from '@/views/FinanceView.vue'
 import DepositView from '@/views/DepositView.vue'
 import DepositDetailView from '@/views/DepositDetailView.vue'
+import SavingView from '@/views/SavingView.vue'
+import SavingDetailView from '@/views/SavingDetailView.vue'
+
 // exchange
 import ExchangeView from '@/views/ExchangeView.vue'
 
@@ -30,6 +34,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
+    
     // accounts
     {
       path: '/signup',
@@ -56,6 +61,7 @@ const router = createRouter({
       name: 'passwordupdate',
       component: ProfileUpdatePasswordView
     },
+
     // article
     {
       path: '/article',
@@ -77,23 +83,43 @@ const router = createRouter({
       name: 'articleupdate',
       component: ArticleUpdateView
     },
+
     // bankmap
     {
       path: '/bankmap',
       name: 'bankmap',
       component: BankMapView
     },
+
     // deposit
     {
-      path: '/deposit',
-      name: 'deposit',
-      component: DepositView
+      path: '/finance',
+      name: 'finance',
+      component: FinanceView,
+      children: [
+        {
+          path: 'deposit',
+          name: 'deposit',
+          component: DepositView
+        },
+        {
+          path: 'saving',
+          name: 'saving',
+          component: SavingView
+        }
+      ]
     },
     {
-      path: '/deposit/:fin_prdt_cd',
+      path: '/finance/deposit/:fin_prdt_cd',
       name: 'depositdetail',
       component: DepositDetailView
     },
+    {
+      path: '/finance/saving/:fin_prdt_cd',
+      name: 'savingdetail',
+      component: SavingDetailView
+    },
+
     // exchange
     {
       path: '/exchange',
