@@ -13,15 +13,15 @@ from .models import ExchangeRates
 API_KEY = 'GCEbouJZVDpfepDSHYSHKEKFmI6JM7js'
 URL = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON'
 
-@api_view(['GET'])
-def api_test(request):
-    url = URL
-    params = {
-        'authkey': API_KEY,
-        'data': 'AP01'  # AP01 : 환율 정보
-    }
-    response = requests.get(url, params=params).json()
-    return Response(response)
+# @api_view(['GET'])
+# def api_test(request):
+#     url = URL
+#     params = {
+#         'authkey': API_KEY,
+#         'data': 'AP01'  # AP01 : 환율 정보
+#     }
+#     response = requests.get(url, params=params).json()
+#     return Response(response)
 
     
 # 문자열에서 쉼표 제거하는 함수
@@ -105,3 +105,10 @@ def rate_data(request, code):
             return Response(rate_serializer.data)
         else:
             return Response({'error': 'Not found'}, status=404)
+        
+@api_view(['GET'])
+def index (request):
+    if request.method == 'GET':
+        exchanges = ExchangeRates.objects.all()
+        serializer = ExchangeRatesSerializer(exchanges, many=True)
+        return Response(serializer.data)
