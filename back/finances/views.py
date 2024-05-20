@@ -17,6 +17,11 @@ def save_deposit_products(request):
     # 정기예금 상품 목록 저장
     for products in response.get('result').get('baseList'):
         fin_prdt_cd = products.get('fin_prdt_cd')
+        
+        # 이미 존재하는지 확인
+        if DepositProducts.objects.filter(fin_prdt_cd=fin_prdt_cd).exists():
+            continue  # 이미 존재하면 건너뛰기
+
         kor_co_nm = products.get('kor_co_nm')
         fin_prdt_nm = products.get('fin_prdt_nm')
         etc_note = products.get('etc_note')
@@ -50,6 +55,10 @@ def save_deposit_products(request):
         intr_rate2 = options.get('intr_rate2')
         save_trm = options.get('save_trm')
 
+        # 이미 존재하는지 확인
+        if DepositOptions.objects.filter(fin_prdt_cd=fin_prdt_cd, intr_rate_type_nm=intr_rate_type_nm, intr_rate=intr_rate, intr_rate2=intr_rate2, save_trm=save_trm).exists():
+            continue  # 이미 존재하면 건너뛰기
+
         save_data = {
             'fin_prdt_cd': fin_prdt_cd,
             'intr_rate_type_nm': intr_rate_type_nm,
@@ -66,6 +75,7 @@ def save_deposit_products(request):
             serializer.save(product=product)
 
     return JsonResponse(response)
+
 
 
 # get: 전체 정기예금 상품 목록 반환, post: 상품 데이터 저장
@@ -88,7 +98,8 @@ def deposit_products(request):
             return Response({"message": "이미 있는 데이터이거나, 데이터가 잘못 입력되었습니다."})
 
 
-# 특정 상품의 옵력 리스트 반환
+
+# 특정 상품의 옵션 리스트 반환
 @api_view(['GET'])
 def deposit_products_options(request, fin_prdt_cd):
     deposit_options = DepositOptions.objects.filter(fin_prdt_cd=fin_prdt_cd)
