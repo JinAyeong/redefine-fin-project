@@ -17,6 +17,7 @@ import ArticleUpdateView from '@/views/ArticleUpdateView.vue'
 import BankMapView from '@/views/BankMapView.vue'
 // deposit
 import DepositView from '@/views/DepositView.vue'
+import DepositDetailView from '@/views/DepositDetailView.vue'
 
 
 
@@ -86,6 +87,11 @@ const router = createRouter({
       path: '/deposit',
       name: 'deposit',
       component: DepositView
+    },
+    {
+      path: '/deposit/:fin_prdt_cd',
+      name: 'depositdetail',
+      component: DepositDetailView
     },
   ]
 })

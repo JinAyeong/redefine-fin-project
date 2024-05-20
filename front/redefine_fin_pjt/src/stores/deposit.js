@@ -5,7 +5,9 @@ import axios from 'axios'
 export const useDepositStore = defineStore('deposit', () => {
   const API_URL = "http://127.0.0.1:8000"
 
-  const saving_products = ref([])  // 정기예금 상품 목록
+  const depositProducts = ref([])  // 정기예금 상품 목록
+  const depositProductOptions = ref([])  // 특정 정기 예금 상품의 옵션 리스트
+
 
   // 정기예금 상품 목록, 옵션 DB에 저장
   const saveDeposit = function () {
@@ -15,7 +17,6 @@ export const useDepositStore = defineStore('deposit', () => {
     })
       .then((response) => {
         console.log(response.data)
-        // saving_products.value = response.data
         console.log('정기예금 상품 목록 DB에 저장')
 
       })
@@ -25,13 +26,13 @@ export const useDepositStore = defineStore('deposit', () => {
   }
 
   // 정기 예금 상품 목록 조회
-  const getDeposit = function () {
+  const getDeposits = function () {
     axios({
       method: 'get',
-      url: `${API_URL}/finances/deposit_products`,
+      url: `${API_URL}/finances/deposit-products/`,
     })
       .then((response) => {
-        saving_products.value = response.data
+        depositProducts.value = response.data
         console.log(response.data)
       })
       .catch((error) => {
@@ -40,5 +41,7 @@ export const useDepositStore = defineStore('deposit', () => {
   }
 
 
-  return { saving_products, saveDeposit, getDeposit }
+
+
+  return { API_URL, depositProducts, depositProductOptions, saveDeposit, getDeposits }
 })

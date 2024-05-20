@@ -1,21 +1,20 @@
 <template>
   <div>
-    <h1>상품 리스트</h1>
     <DepositListItem 
-      v-for="product in products"
-      :key="product.id"
-      :product="product"/>
+      v-for="depositProduct in depositstore.depositProducts"
+      :key="depositProduct.fin_prdt_cd"
+      :depositProduct="depositProduct"/>
   </div>
 </template>
 
 <script setup>
-
+import { ref, onMounted } from 'vue'
+import { useDepositStore } from '@/stores/deposit';
 import DepositListItem from './DepositListItem.vue';
-import { useDepositStore } from '@/stores/deposit'
 
 const depositstore = useDepositStore()
+// const depositProducts = ref(depositstore.depositProducts)
 
-const products = depositstore.saving_products
 
 </script>
 
