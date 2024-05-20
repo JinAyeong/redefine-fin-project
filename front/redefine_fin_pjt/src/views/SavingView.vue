@@ -13,10 +13,6 @@ import SavingList from '@/components/SavingList.vue';
 
 const depositstore = useDepositStore()
 
-onMounted(() => {
-  depositstore.saveSaving()
-  depositstore.getSavings()
-})
 
 </script>
 

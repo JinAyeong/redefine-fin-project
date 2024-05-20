@@ -147,8 +147,10 @@ export const useProfileStore = defineStore('profile', () => {
       .then((response) => {
         alert("프로필 수정 완료!")
         console.log(response.data)
-        getProfile()
+        userProfile.value = res.data 
         router.push({name: 'home'})
+        // router.push({name: 'profile'})
+        // router.go(-1)
       })
       .catch((error) => {
         console.log(error)

@@ -9,11 +9,19 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
+import { useDepositStore } from '@/stores/deposit';
 
-import { RouterLink } from 'vue-router'
+const depositstore = useDepositStore();
 
+onMounted(async () => {
+  await depositstore.saveDeposit();
+  await depositstore.saveSaving();
+  await depositstore.getDeposits();
+  await depositstore.getSavings();
+});
 </script>
 
 <style scoped>
-
 </style>
