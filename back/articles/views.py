@@ -110,19 +110,36 @@ def comment_delete(request, comment_pk):
 #     return Response(context)
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticatedOrReadOnly])
-def likes(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_like_status(request, article_pk):
     user = request.user
-    is_liked = False
+    article = get_object_or_404(Article, pk=article_pk)
+    is_liked = user in article.like_users.all()
+    return Response({'is_liked': is_liked})
 
-    # 좋아요 토글
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def likes(request, article_pk):
+    user = request.user
+    article = get_object_or_404(Article, pk=article_pk)
+
     if user in article.like_users.all():
         article.like_users.remove(user)
+        is_liked = False
     else:
         article.like_users.add(user)
         is_liked = True
 
-    context = {'is_liked': is_liked}
-    return Response(context)
+    return Response({'is_liked': is_liked})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def liked_articles(request):
+    user = request.user
+    liked_articles = Article.objects.filter(like_users=user)
+    serializer = ArticleDetailSerializer(liked_articles, many=True)
+    return Response(serializer.data)
