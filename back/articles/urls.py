@@ -13,5 +13,7 @@ urlpatterns = [
     path('<int:article_pk>/comments/create/', views.comment_create),
     path('comments/<int:comment_pk>/delete/', views.comment_delete),  # 댓글 삭제
     # 좋아요
+    path('<int:article_pk>/like-status/', views.get_like_status),
     path('<int:article_pk>/likes/', views.likes),
+    path('liked_articles/', views.liked_articles),
 ]
