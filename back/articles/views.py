@@ -108,3 +108,21 @@ def comment_delete(request, comment_pk):
 #         'is_liked': is_liked,
 #     }
 #     return Response(context)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def likes(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    user = request.user
+    is_liked = False
+
+    # 좋아요 토글
+    if user in article.like_users.all():
+        article.like_users.remove(user)
+    else:
+        article.like_users.add(user)
+        is_liked = True
+
+    context = {'is_liked': is_liked}
+    return Response(context)
