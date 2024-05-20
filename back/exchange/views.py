@@ -10,8 +10,8 @@ from .models import ExchangeRates
 
 
 # Create your views here.
-URL = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON'
 API_KEY = 'GCEbouJZVDpfepDSHYSHKEKFmI6JM7js'
+URL = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON'
 
 @api_view(['GET'])
 def api_test(request):
