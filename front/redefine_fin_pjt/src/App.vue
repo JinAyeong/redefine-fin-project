@@ -6,6 +6,7 @@
       <RouterLink :to="{name : 'home'}">메인페이지</RouterLink>
       <RouterLink :to="{name : 'bankmap'}">지도</RouterLink>
       <RouterLink :to="{name : 'deposit'}">예적금상품</RouterLink>
+      <RouterLink :to="{name : 'exchange'}">환율계산기</RouterLink>
       <span v-if="profilestore.userName">
         <RouterLink :to="{name : 'profile'}">
           <img src="" alt="profile_img">

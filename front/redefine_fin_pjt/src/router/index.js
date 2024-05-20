@@ -17,8 +17,13 @@ import ArticleUpdateView from '@/views/ArticleUpdateView.vue'
 import BankMapView from '@/views/BankMapView.vue'
 // deposit
 import DepositView from '@/views/DepositView.vue'
+<<<<<<< HEAD
+// exchange
+import ExchangeView from '@/views/ExchangeView.vue'
+=======
 import DepositDetailView from '@/views/DepositDetailView.vue'
 
+>>>>>>> c8dc5655f2dbdc0b20565add811e0368ec479835
 
 
 const router = createRouter({
@@ -88,10 +93,18 @@ const router = createRouter({
       name: 'deposit',
       component: DepositView
     },
+<<<<<<< HEAD
+    // exchange
+    {
+      path: '/exchange',
+      name: 'exchange',
+      component: ExchangeView
+=======
     {
       path: '/deposit/:fin_prdt_cd',
       name: 'depositdetail',
       component: DepositDetailView
+>>>>>>> c8dc5655f2dbdc0b20565add811e0368ec479835
     },
   ]
 })
