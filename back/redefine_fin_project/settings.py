@@ -29,6 +29,8 @@ environ.Env.read_env(
 
 # 환경변수를 읽어오기
 DEPOSIT_API = env('DEPOSIT_API')  # 금융감독원 API
+# KAKAO_MAP_API = env('KAKAO_MAP_API')  # 카카오맵 API
+# DEPOSIT_API = env('DEPOSIT_API')  # 금융감독원 API
 
 
 # Quick-start development settings - unsuitable for production
