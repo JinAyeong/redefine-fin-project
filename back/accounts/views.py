@@ -66,3 +66,10 @@ def add_product(request, product_cd):
 
     user.save()
     return Response({'message': 'Product added to favorites'}, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_cart_status(request, fin_pdt):
+    product = get_object_or_404(User, pk=fin_pdt)
+    is_cart = fin_pdt in product.financial_products.all()
+    return Response({'is_cart': is_cart})
