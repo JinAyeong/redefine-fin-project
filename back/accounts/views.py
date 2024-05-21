@@ -10,6 +10,7 @@ from dj_rest_auth.views import UserDetailsView
 
 from .models import User
 from .serializers import ProfileSerializer, UserInfoserializer, CustomRegisterSerializer
+from finances.serializers import *
 
 
 # 회원정보 조회
@@ -48,28 +49,64 @@ def profile_delete(request):
 # 관심상품 버튼 클릭
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def add_product(request, product_cd):
+def add_product(request, product_cd, option_trm):
     user = request.user
     
     if not user.financial_products:
         products = []
     else:
         products = user.financial_products.split(',')
-    print(products)
 
-    if product_cd in products:
-        products.remove(product_cd)
+    elem = f'{product_cd}/{option_trm}'
+
+    if elem in products:
+        products.remove(elem)
     else:
-        products.append(product_cd)
+        products.append(elem)
     
     user.financial_products = ','.join(products)
 
     user.save()
     return Response({'message': 'Product added to favorites'}, status=status.HTTP_201_CREATED)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def get_cart_status(request, fin_pdt):
-    product = get_object_or_404(User, pk=fin_pdt)
-    is_cart = fin_pdt in product.financial_products.all()
-    return Response({'is_cart': is_cart})
+def get_added_product(request):
+    user = request.user
+
+    if not user.financial_products:
+        products = []
+    else:
+        products = user.financial_products.split(',')
+
+    product_details = []
+    
+    for product in products:
+        product_cd, option_trm = product.split('/')
+        try:
+            # DepositProducts에서 제품을 찾으려고 시도
+            deposit_product = DepositProducts.objects.get(fin_prdt_cd=product_cd)
+            deposit_options = DepositOptions.objects.get(product=deposit_product, save_trm=option_trm)
+
+            product_data = {
+                'product': DepositProductsSerializer(deposit_product).data,
+                'options': DepositOptionsSerializer(deposit_options).data,
+            }
+            product_details.append(product_data)
+
+        except DepositProducts.DoesNotExist:
+            # DepositProducts에 제품이 없으면 SavingProducts에서 찾음
+            try:
+                saving_product = SavingProducts.objects.get(fin_prdt_cd=product_cd)
+                saving_options = SavingOptions.objects.filter(product=saving_product, save_trm=option_trm).first()
+
+                product_data = {
+                    'product': SavingProductsSerializer(saving_product).data,
+                    'options': SavingOptionsSerializer(saving_options).data,
+                }
+                product_details.append(product_data)
+            except SavingProducts.DoesNotExist:
+                continue
+
+    return Response(product_details, status=status.HTTP_200_OK)

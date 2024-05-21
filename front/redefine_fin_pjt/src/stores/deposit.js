@@ -1,9 +1,11 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { useProfileStore } from './profile';
 
 export const useDepositStore = defineStore('deposit', () => {
   const API_URL = "http://127.0.0.1:8000";
+  const profilestore = useProfileStore()
 
   const depositProducts = ref([]);  // 정기예금 상품 목록
   const depositProductOptions = ref([]);  // 특정 정기 예금 상품의 옵션 리스트
@@ -94,8 +96,27 @@ export const useDepositStore = defineStore('deposit', () => {
       });
   };
 
+  // 관심상품 등록
+  const addProduct = function (product_cd, option_trm) {
+    
+    axios({
+      method: 'post',
+      url: `${API_URL}/accounts/profile/add_product/${product_cd}/${option_trm}`,
+      headers: {
+        Authorization: `Token ${profilestore.token}`
+      },
+    })
+      .then((response) => {
+        console.log(response.data)
+        profilestore.getProfile()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   return {
-    API_URL, depositProducts, allProducts, depositProductOptions, savingProducts, savingProductOptions,
+    API_URL, depositProducts, allProducts, depositProductOptions, savingProducts, savingProductOptions, addProduct,
     saveDeposit, getDeposits, saveSaving, getSavings, getAllProducts, getDeposit, getSaving
   };
 

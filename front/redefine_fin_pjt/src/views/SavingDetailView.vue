@@ -12,14 +12,6 @@
       <p>가입 방법: {{ product.join_way }}</p>
       <p>우대 조건: {{ product.spcl_cnd }}</p>
     </div>
-
-    <button v-if="isFavorite" @click="toggleProduct(product.fin_prdt_cd)">
-      {{ '관심상품 제거' }}
-    </button>
-    <button v-else @click="toggleProduct(product.fin_prdt_cd)">
-      {{ '관심상품 추가' }}
-    </button>
-
     <div>
       <hr>
       <h3>상품 옵션</h3>
@@ -47,7 +39,6 @@ const savingstore = useDepositStore();
 const profilestore = useProfileStore()
 const savingOptions = ref(null);
 const product = ref(null);
-const isFavorite = ref(false);
 
 // 상품 가져오기
 const productCd = route.params.fin_prdt_cd;
@@ -70,33 +61,9 @@ onMounted(async () => {
       console.log(error)
     }
   }
+})
 
-  // 사용자의 관심 상품 목록 확인
-  await profilestore.getProfile();
-  const favoriteProducts = profilestore.profile.financial_products.split(',');
-  isFavorite.value = favoriteProducts.includes(productCd);
-});
 
-// 관심상품 등록
-const toggleProduct = function (product_cd) {
-  
-  axios({
-    method: 'post',
-    url: `${savingstore.API_URL}/accounts/profile/add_product/${product_cd}/`,
-    headers: {
-      Authorization: `Token ${profilestore.token}`
-    },
-  })
-    .then((response) => {
-      // console.log(response.data)
-      profilestore.getProfile()
-      isFavorite.value = !isFavorite.value;
-      console.log(isFavorite.value)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-}
 </script>
 
 <style scoped>

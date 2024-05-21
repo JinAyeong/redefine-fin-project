@@ -58,4 +58,4 @@ class SavingOptions(models.Model):
     rsrv_type_nm = models.TextField(null=True)                      # 적립 유형명
     save_trm = models.IntegerField(null=True)                       # 저축 기간
     intr_rate = models.FloatField(null=True)                        # 저축 금리
-    intr_rate2 = models.FloatField(null=True)                       # 최대 우대 금리
+    intr_rate2 = models.FloatField(null=True)                       # 최대 우대 금리z
