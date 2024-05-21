@@ -36,11 +36,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { useDepositStore } from '@/stores/deposit';
 import DepositListItem from './DepositListItem.vue';
-import { useProfileStore } from '@/stores/profile';
-import { useRouter } from 'vue-router'
 
-const router = useRouter()
-const profilestore = useProfileStore()
 const depositstore = useDepositStore()
 
 const selectedBank = ref("");

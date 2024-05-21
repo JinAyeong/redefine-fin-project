@@ -263,3 +263,25 @@ def saving_products_options(request, fin_prdt_cd):
     deposit_options = SavingOptions.objects.filter(fin_prdt_cd=fin_prdt_cd)
     serializers = SavingOptionsSerializer(deposit_options, many=True)
     return Response(serializers.data)
+
+
+
+# 특정 예금 상품의 옵션 리스트 반환 (filter)
+import logging
+
+logger = logging.getLogger(__name__)
+
+@api_view(['GET'])
+def saving_products_filter(request):
+    bank_name = request.GET.get('bank_name', None)
+    logger.debug(f"Received bank_name: {bank_name}")
+    try:
+        if bank_name:
+            products = SavingProducts.objects.filter(kor_co_nm=bank_name)
+        else:
+            products = SavingProducts.objects.all()
+        serializer = SavingProductsSerializer(products, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        logger.error(f"Error fetching saving products: {e}")
+        return Response({"error": str(e)}, status=500)
