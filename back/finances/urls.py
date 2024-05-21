@@ -17,7 +17,7 @@ urlpatterns = [
     path('save-saving-products/', views.save_saving_products),
     # 전체 적금 상품 목록 출력 & 데이터 삽입
     path('saving-products/', views.saving_products),
-        # 특정 예금 상품의 옵션 리스트 출력 (filter)
+    # 특정 예금 상품의 옵션 리스트 출력 (filter)
     path('saving-products-filter/', views.saving_products_filter),
     # 특정 적금 상품의 옵션 리스트 출력
     path('saving-products-options/<str:fin_prdt_cd>/', views.saving_products_options),
