@@ -71,6 +71,23 @@ export const useDepositStore = defineStore('deposit', () => {
     }
   };
 
+
+  // 정기 특정 예금 상품 조회 (filter)
+  const getSaving = (params = {}) => {
+    axios({
+      method: "get",
+      url: `${API_URL}/finances/deposit-products-filter/`,
+      params: params,
+    })
+      .then((res) => {
+        savingProducts.value = res.data;
+        console.log(savingProducts.value)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   // 관심 상품 등록
   const addFavoriteProduct = async (product) => {
     try {
@@ -85,6 +102,6 @@ export const useDepositStore = defineStore('deposit', () => {
 
   return {
     API_URL, depositProducts, depositProductOptions, savingProducts, savingProductOptions,
-    saveDeposit, getDeposits, saveSaving, getSavings, addFavoriteProduct, getDeposit
+    saveDeposit, getDeposits, saveSaving, getSavings, addFavoriteProduct, getDeposit, getSaving
   };
 });
