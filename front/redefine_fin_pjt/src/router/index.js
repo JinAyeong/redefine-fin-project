@@ -25,6 +25,9 @@ import SavingDetailView from '@/views/SavingDetailView.vue'
 // exchange
 import ExchangeView from '@/views/ExchangeView.vue'
 
+// AI Chat
+import AIChatView from '@/views/AIChatView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -125,6 +128,12 @@ const router = createRouter({
       path: '/exchange',
       name: 'exchange',
       component: ExchangeView
+    },
+    // AI Chat
+    {
+      path: '/aichat',
+      name: 'aichat',
+      component: AIChatView
     },
   ]
 })
