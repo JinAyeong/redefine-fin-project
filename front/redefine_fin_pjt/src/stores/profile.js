@@ -15,13 +15,13 @@ export const useProfileStore = defineStore('profile', () => {
     return token.value !== null
   })
 
-  watch(token, (newToken) => {
-    if (newToken) {
-      localStorage.setItem('token', newToken)
-    } else {
-      localStorage.removeItem('token')
-    }
-  })
+  // watch(token, (newToken) => {
+  //   if (newToken) {
+  //     localStorage.setItem('token', newToken)
+  //   } else {
+  //     localStorage.removeItem('token')
+  //   }
+  // })
 
   // 회원가입
   const signUp = function(payload) {
@@ -74,7 +74,7 @@ export const useProfileStore = defineStore('profile', () => {
         token.value = null
         userProfile.value = null
         userName.value = null
-        localStorage.removeItem('profile')
+        // localStorage.removeItem('profile')
         alert('탈퇴가 완료되었습니다')
         router.push({name: 'home'})
       })
@@ -122,7 +122,7 @@ export const useProfileStore = defineStore('profile', () => {
         token.value = null
         userProfile.value = null
         userName.value = null
-        localStorage.removeItem('profile')
+        // localStorage.removeItem('profile')
         router.push({name: 'login'})
       })
       .catch(error => {
@@ -147,10 +147,8 @@ export const useProfileStore = defineStore('profile', () => {
       .then((response) => {
         alert("프로필 수정 완료!")
         console.log(response.data)
-        userProfile.value = res.data 
-        router.push({name: 'home'})
-        // router.push({name: 'profile'})
-        // router.go(-1)
+        userProfile.value = response.data 
+        router.push({name: 'profile'})
       })
       .catch((error) => {
         console.log(error)
@@ -206,5 +204,4 @@ export const useProfileStore = defineStore('profile', () => {
   return { API_URL, token, userName, isLogin, signUp, signOut, logIn, logOut, profileUpdate, updatePassword, userProfile, getProfile }
 }, {
   persist: true
-  // persist: {storage: localStorage}
 })

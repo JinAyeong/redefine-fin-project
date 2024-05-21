@@ -11,7 +11,7 @@
         <RouterLink :to="{name : 'profile'}">
           <img src="" alt="profile_img">
         </RouterLink>
-        <span>{{ profilestore.userName }}님 어솨~^^</span>
+        <span>{{ profilestore.userProfile.name }}님 어솨~^^</span>
         <button @click="profilestore.logOut">로그아웃</button>
       </span>
       <span v-else>

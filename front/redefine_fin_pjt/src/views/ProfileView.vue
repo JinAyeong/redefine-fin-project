@@ -12,7 +12,7 @@
 
         <h2>관심상품 리스트</h2>
         <div v-if="userProfile.financial_products">
-          {{ filteredProducts }}
+          {{ userProfile.financial_products }}
           <ProfileProduct />
         </div>
         <p v-else>아직 가입한 상품이 없습니다.</p>

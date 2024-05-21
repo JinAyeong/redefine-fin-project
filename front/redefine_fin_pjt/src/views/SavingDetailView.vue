@@ -76,6 +76,7 @@ const addProduct = function (product_cd) {
   })
     .then((response) => {
       console.log(response.data)
+      profilestore.getProfile()
     })
     .catch((error) => {
       console.log(error)
