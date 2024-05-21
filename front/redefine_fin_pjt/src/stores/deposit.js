@@ -33,6 +33,23 @@ export const useDepositStore = defineStore('deposit', () => {
     }
   };
 
+
+    // 정기 특정 예금 상품 조회 (filter)
+    const getDeposit = (params = {}) => {
+      axios({
+        method: "get",
+        url: `${API_URL}/finances/deposit-products-filter/`,
+        params: params,
+      })
+        .then((res) => {
+          depositProducts.value = res.data;
+          // console.log(depositProducts.value)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
   // 적금 상품 목록, 옵션 DB에 저장
   const saveSaving = async function () {
     try {
@@ -55,9 +72,26 @@ export const useDepositStore = defineStore('deposit', () => {
     }
   };
 
+
   // 정기예금과 적금 상품 목록 조회
   const getAllProducts = async function () {
     allProducts.value = depositProducts.value.concat(savingProducts.value);
+
+
+  // 정기 특정 예금 상품 조회 (filter)
+  const getSaving = (params = {}) => {
+    axios({
+      method: "get",
+      url: `${API_URL}/finances/deposit-products-filter/`,
+      params: params,
+    })
+      .then((res) => {
+        savingProducts.value = res.data;
+        console.log(savingProducts.value)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // 관심 상품 등록
@@ -74,6 +108,6 @@ export const useDepositStore = defineStore('deposit', () => {
 
   return {
     API_URL, depositProducts, allProducts, depositProductOptions, savingProducts, savingProductOptions,
-    saveDeposit, getDeposits, saveSaving, getSavings, getAllProducts, addFavoriteProduct
+    saveDeposit, getDeposits, saveSaving, getSavings, getAllProducts, addFavoriteProduct, addFavoriteProduct, getDeposit, getSaving
   };
 });

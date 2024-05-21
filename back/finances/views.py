@@ -110,6 +110,34 @@ def deposit_products_options(request, fin_prdt_cd):
     return Response(serializers.data)
 
 
+# # 특정 예금 상품의 옵션 리스트 반환 (은행 필터)
+# @api_view(['GET'])
+# def deposit_option_filter(request, cor_co_nm):
+#     deposit_options = DepositOptions.objects.filter(cor_co_nm=cor_co_nm)
+#     serializers = DepositOptionsSerializer(deposit_options, many=True)
+#     return Response(serializers.data)
+
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+@api_view(['GET'])
+def deposit_products_filter(request):
+    bank_name = request.GET.get('bank_name', None)
+    logger.debug(f"Received bank_name: {bank_name}")
+    try:
+        if bank_name:
+            products = DepositProducts.objects.filter(kor_co_nm=bank_name)
+        else:
+            products = DepositProducts.objects.all()
+        serializer = DepositProductsSerializer(products, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        logger.error(f"Error fetching deposit products: {e}")
+        return Response({"error": str(e)}, status=500)
+
+
 # 가입 기간에 상관없이 금리가 가장 높은 상품과 해당 상품의 옵션 리스트 출력
 @api_view(['GET'])
 def top_rate(request):
@@ -235,3 +263,25 @@ def saving_products_options(request, fin_prdt_cd):
     deposit_options = SavingOptions.objects.filter(fin_prdt_cd=fin_prdt_cd)
     serializers = SavingOptionsSerializer(deposit_options, many=True)
     return Response(serializers.data)
+
+
+
+# 특정 예금 상품의 옵션 리스트 반환 (filter)
+import logging
+
+logger = logging.getLogger(__name__)
+
+@api_view(['GET'])
+def saving_products_filter(request):
+    bank_name = request.GET.get('bank_name', None)
+    logger.debug(f"Received bank_name: {bank_name}")
+    try:
+        if bank_name:
+            products = SavingProducts.objects.filter(kor_co_nm=bank_name)
+        else:
+            products = SavingProducts.objects.all()
+        serializer = SavingProductsSerializer(products, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        logger.error(f"Error fetching saving products: {e}")
+        return Response({"error": str(e)}, status=500)
