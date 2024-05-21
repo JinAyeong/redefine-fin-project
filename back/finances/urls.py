@@ -8,6 +8,10 @@ urlpatterns = [
     path('deposit-products/', views.deposit_products),
     # 특정 예금 상품의 옵션 리스트 출력
     path('deposit-products-options/<str:fin_prdt_cd>/', views.deposit_products_options),
+    # 특정 예금 상품의 옵션 리스트 출력
+    path('deposit-products-filter/', views.deposit_products_filter),
+    # # 특정 예금 상품의 옵션 리스트 출력 (은행 필터)
+    # path('deposit-option-filter/<str:cor_co_nm>/', views.deposit_option_filter),
     # 가입 기간에 상관없이 최고 금리가 가장 높은 금융 삼품과 해당 상품의 옵션 리스트 출력
     path('deposit-products/top_rate/', views.top_rate),
 
