@@ -8,6 +8,7 @@
       <p>작성자 : {{ article.user_name }}</p>
       <p>제목 : {{ article.title }}</p>
       <p>내용 : {{ article.content }}</p>
+      <p>좋아요 수 : {{ article.like_users }}</p>
       <hr>
 
 

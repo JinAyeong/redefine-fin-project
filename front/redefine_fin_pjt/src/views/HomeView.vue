@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>메인페이지</h1>
+    <button @click="findProduct">상품 추천받기!</button>
   </div>
 </template>
 
@@ -8,8 +9,10 @@
 
 import { onMounted } from 'vue';
 import { useDepositStore } from '@/stores/deposit';
+import { useRouter } from 'vue-router';
 
 const depositstore = useDepositStore();
+const router = useRouter()
 
 if (depositstore.saveDeposit.length === 0) {
   onMounted(async () => {
@@ -21,6 +24,9 @@ if (depositstore.saveDeposit.length === 0) {
   });
 }
 
+const findProduct = function () {
+  router.push({name: 'recommend'})
+}
 
 </script>
 

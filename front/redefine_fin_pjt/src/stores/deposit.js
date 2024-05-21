@@ -94,21 +94,12 @@ export const useDepositStore = defineStore('deposit', () => {
       });
   };
 
-  // 관심 상품 등록
-  const addFavoriteProduct = async (product) => {
-    try {
-      const response = await axios.post(`${API_URL}/user/favorite-products`, product);
-      console.log('관심 상품 등록:', response.data);
-      return response.data;
-    } catch (error) {
-      console.log('관심 상품 등록 실패:', error);
-      throw error;
-    }
-  };
-
   return {
     API_URL, depositProducts, allProducts, depositProductOptions, savingProducts, savingProductOptions,
-    saveDeposit, getDeposits, saveSaving, getSavings, getAllProducts, addFavoriteProduct, addFavoriteProduct, getDeposit, getSaving
+    saveDeposit, getDeposits, saveSaving, getSavings, getAllProducts, getDeposit, getSaving
   };
 
+}, {
+  persist: true
+  // persist: {storage: localStorage}
 })

@@ -21,10 +21,10 @@ import DepositView from '@/views/DepositView.vue'
 import DepositDetailView from '@/views/DepositDetailView.vue'
 import SavingView from '@/views/SavingView.vue'
 import SavingDetailView from '@/views/SavingDetailView.vue'
-
 // exchange
 import ExchangeView from '@/views/ExchangeView.vue'
-
+// recommend
+import RecommendView from '@/views/RecommendView.vue'
 // AI Chat
 import AIChatView from '@/views/AIChatView.vue'
 
@@ -122,12 +122,17 @@ const router = createRouter({
       name: 'savingdetail',
       component: SavingDetailView
     },
-
     // exchange
     {
       path: '/exchange',
       name: 'exchange',
       component: ExchangeView
+    },
+    // recommend
+    {
+      path: '/recommend',
+      name: 'recommend',
+      component: RecommendView
     },
     // AI Chat
     {
