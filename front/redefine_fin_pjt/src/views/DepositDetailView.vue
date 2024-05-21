@@ -12,6 +12,7 @@
       <p>가입 방법: {{ product.join_way }}</p>
       <p>우대 조건: {{ product.spcl_cnd }}</p>
     </div>
+    <button @click="addProduct(product.fin_prdt_cd)">관심 상품 등록</button>
     <div>
       <hr>
       <h3>상품 옵션</h3>
@@ -31,10 +32,12 @@ import axios from 'axios';
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import { useDepositStore } from '@/stores/deposit';
+import { useProfileStore } from '@/stores/profile';
 import DepositOptionItem from '@/components/DepositOptionItem.vue'
 
 const route = useRoute()
 const depositstore = useDepositStore()
+const profilestore = useProfileStore()
 const depositOptions = ref(null)
 const product = ref(null)
 
@@ -58,6 +61,24 @@ onMounted(async () => {
     }
   }
 });
+
+// 관심상품 등록
+const addProduct = function (product_cd) {
+  
+  axios({
+    method: 'post',
+    url: `${depositstore.API_URL}/accounts/profile/add_product/${product_cd}/`,
+    headers: {
+      Authorization: `Token ${profilestore.token}`
+    },
+  })
+    .then((response) => {
+      console.log(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
 </script>
 
 <style scoped>
