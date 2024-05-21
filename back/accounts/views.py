@@ -70,6 +70,7 @@ def add_product(request, product_cd, option_trm):
     return Response({'message': 'Product added to favorites'}, status=status.HTTP_201_CREATED)
 
 
+# 관심상품 출력
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_added_product(request):
@@ -110,3 +111,21 @@ def get_added_product(request):
                 continue
 
     return Response(product_details, status=status.HTTP_200_OK)
+
+
+# 관심상품 등록 유무 확인
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_product(request, product_cd, option_trm):
+    user = request.user
+    
+    if not user.financial_products:
+        return Response(False)
+    else:
+        products = user.financial_products.split(',')
+
+    elem = f'{product_cd}/{option_trm}'
+
+    if elem in products:
+        return Response(True)
+    return Response(False)
