@@ -43,3 +43,26 @@ def profile_update(request):
 def profile_delete(request):
     request.user.delete()
     return Response({'delete': '탈퇴가 완료되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
+
+
+# 관심상품 버튼 클릭
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_product(request, product_cd):
+    user = request.user
+    
+    if not user.financial_products:
+        products = []
+    else:
+        products = user.financial_products.split(',')
+    print(products)
+
+    if product_cd in products:
+        products.remove(product_cd)
+    else:
+        products.append(product_cd)
+    
+    user.financial_products = ','.join(products)
+
+    user.save()
+    return Response({'message': 'Product added to favorites'}, status=status.HTTP_201_CREATED)
