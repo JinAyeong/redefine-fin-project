@@ -25,6 +25,8 @@ import SavingDetailView from '@/views/SavingDetailView.vue'
 import ExchangeView from '@/views/ExchangeView.vue'
 // recommend
 import RecommendView from '@/views/RecommendView.vue'
+// AI Chat
+import AIChatView from '@/views/AIChatView.vue'
 
 
 const router = createRouter({
@@ -131,6 +133,12 @@ const router = createRouter({
       path: '/recommend',
       name: 'recommend',
       component: RecommendView
+    },
+    // AI Chat
+    {
+      path: '/aichat',
+      name: 'aichat',
+      component: AIChatView
     },
   ]
 })

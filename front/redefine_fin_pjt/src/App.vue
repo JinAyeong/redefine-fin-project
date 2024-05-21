@@ -7,6 +7,7 @@
       <RouterLink :to="{name : 'bankmap'}">지도</RouterLink>
       <RouterLink :to="{name : 'finance'}">예적금상품</RouterLink>
       <RouterLink :to="{name : 'exchange'}">환율계산기</RouterLink>
+      <RouterLink :to="{name : 'aichat'}">AI Chat</RouterLink>
       <span v-if="profilestore.userName">
         <RouterLink :to="{name : 'profile'}">
           <img src="" alt="profile_img">
