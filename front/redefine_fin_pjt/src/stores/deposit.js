@@ -9,6 +9,7 @@ export const useDepositStore = defineStore('deposit', () => {
   const depositProductOptions = ref([]);  // 특정 정기 예금 상품의 옵션 리스트
   const savingProducts = ref([]);  // 적금 상품 목록
   const savingProductOptions = ref([]);  // 특정 적금 상품의 옵션 리스트
+  const allProducts = ref([])  // 모든 상품 목록
 
   // 정기예금 상품 목록, 옵션 DB에 저장
   const saveDeposit = async function () {
@@ -54,6 +55,11 @@ export const useDepositStore = defineStore('deposit', () => {
     }
   };
 
+  // 정기예금과 적금 상품 목록 조회
+  const getAllProducts = async function () {
+    allProducts.value = depositProducts.value.concat(savingProducts.value);
+  };
+
   // 관심 상품 등록
   const addFavoriteProduct = async (product) => {
     try {
@@ -67,7 +73,7 @@ export const useDepositStore = defineStore('deposit', () => {
   };
 
   return {
-    API_URL, depositProducts, depositProductOptions, savingProducts, savingProductOptions,
-    saveDeposit, getDeposits, saveSaving, getSavings, addFavoriteProduct
+    API_URL, depositProducts, allProducts, depositProductOptions, savingProducts, savingProductOptions,
+    saveDeposit, getDeposits, saveSaving, getSavings, getAllProducts, addFavoriteProduct
   };
 });
