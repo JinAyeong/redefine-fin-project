@@ -76,7 +76,7 @@ export const useDepositStore = defineStore('deposit', () => {
   // 정기예금과 적금 상품 목록 조회
   const getAllProducts = async function () {
     allProducts.value = depositProducts.value.concat(savingProducts.value);
-
+  }
 
   // 정기 특정 예금 상품 조회 (filter)
   const getSaving = (params = {}) => {
@@ -110,4 +110,5 @@ export const useDepositStore = defineStore('deposit', () => {
     API_URL, depositProducts, allProducts, depositProductOptions, savingProducts, savingProductOptions,
     saveDeposit, getDeposits, saveSaving, getSavings, getAllProducts, addFavoriteProduct, addFavoriteProduct, getDeposit, getSaving
   };
-});
+
+})
