@@ -36,7 +36,7 @@ import { useProfileStore } from '@/stores/profile';
 import SavingOptionItem from '@/components/SavingOptionItem.vue';
 
 const route = useRoute();
-const depositstore = useDepositStore();
+const savingstore = useDepositStore();
 const profilestore = useProfileStore()
 const savingOptions = ref(null);
 const product = ref(null);
@@ -46,14 +46,16 @@ const productCd = route.params.fin_prdt_cd;
 
 onMounted(async () => {
    // 적금 상품 목록 가져오기
-  await depositstore.getSavings()
-  product.value = depositstore.savingProducts.find(
+  await savingstore.getSavings()
+  
+  product.value = savingstore.savingProducts.find(
     (product) => product.fin_prdt_cd === productCd
   )
+  console.log(product.value)
   if (product.value) {
     // 해당 상품의 옵션 가져오기
     try {
-      const response = await axios.get(`${depositstore.API_URL}/finances/saving-products-options/${productCd}`)
+      const response = await axios.get(`${savingstore.API_URL}/finances/saving-products-options/${productCd}`)
       savingOptions.value = response.data
       console.log(response.data)
     } catch (error) {
@@ -67,7 +69,7 @@ const addProduct = function (product_cd) {
   
   axios({
     method: 'post',
-    url: `${depositstore.API_URL}/accounts/profile/add_product/${product_cd}/`,
+    url: `${savingstore.API_URL}/accounts/profile/add_product/${product_cd}/`,
     headers: {
       Authorization: `Token ${profilestore.token}`
     },

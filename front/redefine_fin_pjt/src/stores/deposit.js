@@ -27,7 +27,7 @@ export const useDepositStore = defineStore('deposit', () => {
     try {
       const response = await axios.get(`${API_URL}/finances/deposit-products/`);
       depositProducts.value = response.data;
-      console.log(response.data);
+      console.log(depositProducts.data);
     } catch (error) {
       console.log(error);
     }
@@ -66,7 +66,7 @@ export const useDepositStore = defineStore('deposit', () => {
     try {
       const response = await axios.get(`${API_URL}/finances/saving-products/`);
       savingProducts.value = response.data;
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -82,12 +82,12 @@ export const useDepositStore = defineStore('deposit', () => {
   const getSaving = (params = {}) => {
     axios({
       method: "get",
-      url: `${API_URL}/finances/deposit-products-filter/`,
+      url: `${API_URL}/finances/saving-products-filter/`,
       params: params,
     })
       .then((res) => {
         savingProducts.value = res.data;
-        console.log(savingProducts.value)
+        // console.log(savingProducts.value)
       })
       .catch((err) => {
         console.log(err);

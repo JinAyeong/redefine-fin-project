@@ -50,12 +50,13 @@ onMounted(async () => {
   product.value = depositstore.depositProducts.find(
     (product) => product.fin_prdt_cd === productCd
   );
+  console.log(product.value)
   if (product.value) {
     // 해당 상품의 옵션 가져오기
     try {
       const response = await axios.get(`${depositstore.API_URL}/finances/deposit-products-options/${productCd}`);
       depositOptions.value = response.data;
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(error);
     }

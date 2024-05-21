@@ -251,8 +251,8 @@ def save_saving_products(request):
 # get: 전체 적금 상품 목록 반환, post: 상품 데이터 저장
 @api_view(['GET'])
 def saving_products(request):
-    deposit_products = SavingProducts.objects.all()
-    serializers = SavingProductsSerializer(deposit_products, many=True)
+    saving_products = SavingProducts.objects.all()
+    serializers = SavingProductsSerializer(saving_products, many=True)
     return Response(serializers.data)
 
 
