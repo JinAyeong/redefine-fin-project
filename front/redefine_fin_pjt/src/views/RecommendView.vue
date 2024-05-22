@@ -18,6 +18,7 @@ const profilestore = useProfileStore()
 
 onMounted(() => {
   recommendstore.recommendAuto(profilestore.token)
+
 })
 
 </script>
