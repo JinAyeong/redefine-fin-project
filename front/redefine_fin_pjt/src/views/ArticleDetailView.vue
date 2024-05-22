@@ -1,47 +1,78 @@
 <template>
-    <div>
-      <h1>디테일페이지</h1>
-      <p v-if="article.created_at === article.updated_at">작성시간 : {{ article.created_at }}</p>
-      <p v-if="article.created_at !== article.updated_at">수정시간 : {{ article.updated_at }}</p>
 
-      <!-- 본인일 경우에만 게시글 조작 버튼 출력되도록 -->
-      <div v-if="userProfile.username===article.user_name">
-        <button @click="deleteArticle">게시물 삭제</button>
-        <button @click="articleUpdate">게시물 수정</button>
-      </div>
+  <div>
+    <body class="d-flex flex-column">
+        <main class="flex-shrink-0">
+            <!-- Page Content-->
+            <section class="py-5">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5">
+                        <div class="col-lg-3">
+                            <div class="d-flex align-items-center mt-lg-5 mb-4">
+                                <img class="img-fluid rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                                <div class="ms-3">
+                                    <div class="fw-bold">작성자 {{ article.user_name }}</div>
+                                    <div v-if="userProfile.username===article.user_name">
+                                      <button @click="deleteArticle">게시물 삭제</button><br>
+                                      <button @click="articleUpdate">게시물 수정</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <!-- Post content-->
+                            <article>
+                                <!-- Post header-->
+                                <header class="mb-4">
+                                    <!-- Post title-->
+                                    <h1 class="fw-bolder mb-1">{{ article.title }}</h1>
+                                    <!-- Post meta content-->
+                                    <div class="text-muted fst-italic mb-2">
+                                      <p>작성시간 : {{ article.created_at }} 수정시간 : {{ article.updated_at }}</p>
+                                      <p>좋아요 수 : {{ LikeUsers.length }}</p>
+                                    </div>
+                                </header>
+                                <!-- Post content-->
+                                <section class="mb-5">
+                                  <p>{{ article.content }}</p>
+                                  <!-- 좋아요 버튼 (본인 게시물일 경우 좋아요 버튼 X) -->
+                                  <div v-if="userProfile.username != article.user_name">
+                                    <button v-if="!isLiked" @click="toggleLike">
+                                      <span>좋아요</span>
+                                    </button>
+                                    <button v-if="isLiked" @click="toggleLike">
+                                      <span>좋아요 취소</span>
+                                    </button>
+                                  </div>
+                                </section>
+                                
+                            </article>
+                            <!-- Comments section-->
+                            <section>
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <!-- Comment form-->
+                                        <form class="mb-4"><textarea class="form-control" rows="3" placeholder="댓글을 입력해주세요"></textarea></form>
+                                        <!-- Single comment-->
+                                        <div class="" v-if="comments.length">
+                                            <div class="ms-3" v-for="comment in comments" :key="comment.id">
+                                                <div class="fw-bold">{{ comment.user.username }}</div>
+                                                {{ comment.content }}
+                                                <!-- 본인 댓글만 삭제 가능 -->
+                                                <button v-if="isCommentAuthor(comment)" @click="deleteComment(comment.id)">댓글 삭제</button>
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
 
-
-      <p>작성자 : {{ article.user_name }}</p>
-      <p>제목 : {{ article.title }}</p>
-      <p>내용 : {{ article.content }}</p>
-      <p>좋아요 수 : {{ LikeUsers.length }}</p>
-      <hr>
-
-
-      <!-- 댓글  -->
-      <textarea v-model.trim="commentContent"></textarea><br>
-      <button @click="createComment">댓글 작성</button>
-      <hr>
-      <h2 v-if="comments.length">댓글 목록</h2>
-      <div v-for="comment in comments" :key="comment.id">
-        <p>{{ comment.user.username }} - {{ comment.content }}</p>
-
-          <!-- 본인 댓글만 삭제 가능 -->
-            <button v-if="isCommentAuthor(comment)" @click="deleteComment(comment.id)">댓글 삭제</button>
-          <hr>
-      </div>
-
-
-      <!-- 좋아요 버튼 (본인 게시물일 경우 좋아요 버튼 X) -->
-      <div v-if="userProfile.username != article.user_name">
-        <button v-if="!isLiked" @click="toggleLike">
-          <span>좋아요</span>
-        </button>
-        <button v-if="isLiked" @click="toggleLike">
-          <span>좋아요 취소</span>
-        </button>
-      </div>
-    </div>
+  </div>
 </template>
 
 <script setup>
