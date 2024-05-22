@@ -1,28 +1,48 @@
 <template>
-  <div>
-  <label for="filter">필터: </label>
-  <select v-model="selectedBank" id="filter">
-    <option value="우리은행">우리은행</option>
-    <option value="한국스탠다드차타드은행">한국스탠다드차타드은행</option>
-    <option value="대구은행">대구은행</option>
-    <option value="부산은행">부산은행</option>
-    <option value="광주은행">광주은행</option>
-    <option value="제주은행">제주은행</option>
-    <option value="전북은행">전북은행</option>
-    <option value="경남은행">경남은행</option>
-    <option value="중소기업은행">중소기업은행</option>
-    <option value="한국산업은행">한국산업은행</option>
-    <option value="국민은행">국민은행</option>
-    <option value="신한은행">신한은행</option>
-    <option value="농협은행 주식회사">농협은행 주식회사</option>
-    <option value="하나은행">하나은행</option>
-    <option value="주식회사 케이뱅크">주식회사 케이뱅크</option>
-    <option value="수협은행">수협은행</option>
-    <option value="주식회사 카카오뱅크">주식회사 카카오뱅크</option>
-    <option value="코스뱅크 주식회사">코스뱅크 주식회사</option>
-  </select>
-  <button type="submit" @click="fetchSavingProducts">검색</button>
-</div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">상품 조회</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="http://localhost:5173/finance/deposit">예금</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://localhost:5173/finance/saving">적금</a>
+          </li>
+          <li class="nav-item dropdown">
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="d-flex">
+      <select v-model="selectedBank" class="form-select me-2 custom-select-width" aria-label="은행을 선택해주세요">
+        <option value="우리은행">우리은행</option>
+        <option value="한국스탠다드차타드은행">한국스탠다드차타드은행</option>
+        <option value="대구은행">대구은행</option>
+        <option value="부산은행">부산은행</option>
+        <option value="광주은행">광주은행</option>
+        <option value="제주은행">제주은행</option>
+        <option value="전북은행">전북은행</option>
+        <option value="경남은행">경남은행</option>
+        <option value="중소기업은행">중소기업은행</option>
+        <option value="한국산업은행">한국산업은행</option>
+        <option value="국민은행">국민은행</option>
+        <option value="신한은행">신한은행</option>
+        <option value="농협은행 주식회사">농협은행 주식회사</option>
+        <option value="하나은행">하나은행</option>
+        <option value="주식회사 케이뱅크">주식회사 케이뱅크</option>
+        <option value="수협은행">수협은행</option>
+        <option value="주식회사 카카오뱅크">주식회사 카카오뱅크</option>
+        <option value="코스뱅크 주식회사">코스뱅크 주식회사</option>
+      </select>
+      <button @click="fetchSavingProducts" type="button" class="btn btn-outline-secondary">검색</button>
+    </div>
+  </nav>
+
 
 <div>
 <SavingListItem 
@@ -64,5 +84,20 @@ savingProducts.value = newProducts; // Pinia 상태 변경을 감지하여 로�
 </script>
 
 <style scoped>
+button {
+  white-space: nowrap;
+}
 
+/* select와 button의 높이를 동일하게 맞추기 위한 추가 스타일 */
+.form-select,
+.btn {
+  height: calc(2.25rem + 2px); /* Bootstrap 기본 높이와 동일 */
+  padding: 0.375rem 0.75rem;   /* Bootstrap 기본 패딩 */
+  font-size: 1rem;            /* Bootstrap 기본 폰트 크기 */
+}
+
+
+.custom-select-width {
+  width: 300px; /* 원하는 가로 길이로 설정 */
+}
 </style>

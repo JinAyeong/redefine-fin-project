@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <h2>정기 예금 상품</h2>
     <DepositList />
-  </div>
 </template>
 
 <script setup>
