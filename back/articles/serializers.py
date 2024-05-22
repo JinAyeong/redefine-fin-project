@@ -15,6 +15,7 @@ class ArticleListSerializer(serializers.ModelSerializer):
 # 게시글 생성, 게시글 상세조회/수정
 class ArticleDetailSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.username', read_only=True)
+    # like_users_count = serializers.IntegerField(source='like_users.count', read_only=True)
     class Meta:
         model = Article
         fields = '__all__'

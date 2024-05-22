@@ -19,7 +19,7 @@ export const useRecommendStore = defineStore('recommend', () => {
     })
       .then((response) => {
         productAuto.value = response.data
-        console.log(response.data)
+        console.log(productAuto.value.most_common_products)
       })
       .catch(error => {
         console.log(error)

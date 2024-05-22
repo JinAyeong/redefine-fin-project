@@ -3,12 +3,18 @@
       <h1>디테일페이지</h1>
       <p v-if="article.created_at === article.updated_at">작성시간 : {{ article.created_at }}</p>
       <p v-if="article.created_at !== article.updated_at">수정시간 : {{ article.updated_at }}</p>
-      <button @click="deleteArticle">게시물 삭제</button>
-      <button @click="articleUpdate">게시물 수정</button>
+
+      <!-- 본인일 경우에만 게시글 조작 버튼 출력되도록 -->
+      <div v-if="userProfile.username===article.user_name">
+        <button @click="deleteArticle">게시물 삭제</button>
+        <button @click="articleUpdate">게시물 수정</button>
+      </div>
+
+
       <p>작성자 : {{ article.user_name }}</p>
       <p>제목 : {{ article.title }}</p>
       <p>내용 : {{ article.content }}</p>
-      <p>좋아요 수 : {{ article.like_users }}</p>
+      <p>좋아요 수 : {{ LikeUsers.length }}</p>
       <hr>
 
 
@@ -18,21 +24,23 @@
       <hr>
       <h2 v-if="comments.length">댓글 목록</h2>
       <div v-for="comment in comments" :key="comment.id">
-          <!-- <p>{{ comment }}</p> -->
-          <p>{{ comment.user.username }} - {{ comment.content }}</p>
-          <button v-if="isCommentAuthor(comment)" @click="deleteComment(comment.id)">댓글 삭제</button>
+        <p>{{ comment.user.username }} - {{ comment.content }}</p>
+
+          <!-- 본인 댓글만 삭제 가능 -->
+            <button v-if="isCommentAuthor(comment)" @click="deleteComment(comment.id)">댓글 삭제</button>
           <hr>
       </div>
 
 
-      <!-- 좋아요 버튼 -->
-      <button v-if="!isLiked" @click="toggleLike">
-        <span>좋아요</span>
-      </button>
-      <button v-if="isLiked" @click="toggleLike">
-        <span>좋아요 취소</span>
-
-      </button>
+      <!-- 좋아요 버튼 (본인 게시물일 경우 좋아요 버튼 X) -->
+      <div v-if="userProfile.username != article.user_name">
+        <button v-if="!isLiked" @click="toggleLike">
+          <span>좋아요</span>
+        </button>
+        <button v-if="isLiked" @click="toggleLike">
+          <span>좋아요 취소</span>
+        </button>
+      </div>
     </div>
 </template>
 
@@ -48,12 +56,15 @@ const route = useRoute()
 const router = useRouter()
 const articlestore = useArticleStore()
 const profilestore = useProfileStore()
+const userProfile = profilestore.userProfile;
 const isLiked = ref()
 // 해당 article 가져오기
 const articleId = route.params.id
 const article = ref(
     articlestore.articles.find((product) => product.id == articleId)
 )
+const LikeUsers = ref([])
+
 
 // 게시물 삭제
 const deleteArticle = function () {
@@ -109,6 +120,9 @@ const toggleLike = () => {
   .then(response => {
     // 서버에서 받은 좋아요 상태를 반영
     isLiked.value = response.data.is_liked
+    if (isLiked.value === true) {LikeUsers.value.push('1')}
+    else {LikeUsers.value.pop()}
+    // console.log(LikeUsers)
   })
   .catch(error => {
     console.error('좋아요 토글 실패:', error)
@@ -188,6 +202,7 @@ const fetchComments = () => {
 onMounted(() => {
   fetchLikeStatus() // 좋아요 상태를 가져옵니다.
   fetchComments()
+  profilestore.getProfile()
 })
 </script>
 
