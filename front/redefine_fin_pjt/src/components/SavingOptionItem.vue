@@ -17,9 +17,11 @@ import { ref, watch } from 'vue';
 import axios from 'axios';
 import { useDepositStore } from '@/stores/deposit'
 import { useProfileStore } from '@/stores/profile';
+import { useRouter } from 'vue-router';
 
 const depositstore = useDepositStore()
 const profilestore = useProfileStore()
+const router = useRouter
 
 const props = defineProps({
   savingOption: {
@@ -53,6 +55,9 @@ const addProduct = (product_cd, option_trm) => {
   .then(response => {
     console.log(response.data);
     profilestore.getProfile();
+    if (confirm("관심상품 목록을 확인하시겠습니까?") == true) {
+      router.push({name: 'profile'})
+    }
   })
   .catch(error => {
     console.error(error);

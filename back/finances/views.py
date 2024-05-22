@@ -1,4 +1,5 @@
 from django.db.models import Q
+from collections import Counter
 import requests
 from django.conf import settings
 from django.http import JsonResponse
@@ -298,8 +299,8 @@ def recommend_similar_product(request):
     money = request.user.money
     salary = request.user.salary
     age_scope = 5
-    money_scope = 1000000
-    salary_scope = 1500000
+    money_scope = 10000000
+    salary_scope = 150000000
 
     correct_users = User.objects.filter(
         Q(age__range=(age - age_scope, age + age_scope)) &
@@ -318,12 +319,16 @@ def recommend_similar_product(request):
             all_products.extend(product_list.split(','))
 
     # 상품별 가입자 수를 계산
-    from collections import Counter
     product_counter = Counter(all_products)
 
     # 가장 많이 가입한 상품 상위 5개 반환
     most_common_products = product_counter.most_common(5)
+    # 제품 ID만 추출하여 리스트 생성
+    product_ids = [product for product, count in most_common_products]
 
     return Response({
-        'most_common_products': most_common_products
+        # 'most_common_products': most_common_products
+        'most_common_products': product_ids
+        
     })
+

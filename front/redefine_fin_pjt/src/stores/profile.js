@@ -48,39 +48,41 @@ export const useProfileStore = defineStore('profile', () => {
   // 회원탈퇴
   const signOut = function () {
     // 로그아웃 먼저 진행
-    axios({
-      method: 'post',
-      url: `${API_URL}/accounts/logout/`,
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
-    })
-      .then((response) => {
-        console.log(response.data)
+    if (confirm("정말로 탈퇴하시겠습니까?") == true) {
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/logout/`,
+        headers: {
+          Authorization: `Token ${token.value}`
+        }
       })
-      .catch(error => {
-        console.log(error)
+        .then((response) => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      // 탈퇴 진행
+      axios({
+        method: 'delete',
+        url: `${API_URL}/accounts/profile/delete/`,
+        headers: {
+          Authorization: `Token ${token.value}`
+        }
       })
-    // 탈퇴 진행
-    axios({
-      method: 'delete',
-      url: `${API_URL}/accounts/profile/delete/`,
-      headers: {
-        Authorization: `Token ${token.value}`
-      }
-    })
-      .then((response) => {
-        console.log(response.data)
-        token.value = null
-        userProfile.value = null
-        userName.value = null
-        // localStorage.removeItem('profile')
-        alert('탈퇴가 완료되었습니다')
-        router.push({name: 'home'})
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+        .then((response) => {
+          console.log(response.data)
+          token.value = null
+          userProfile.value = null
+          userName.value = null
+          // localStorage.removeItem('profile')
+          alert('탈퇴가 완료되었습니다')
+          router.push({name: 'home'})
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   }
 
   // 로그인

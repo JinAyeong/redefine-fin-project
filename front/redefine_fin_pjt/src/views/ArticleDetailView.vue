@@ -167,19 +167,21 @@ const isCommentAuthor = (comment) => {
 
 
 const deleteComment = (commentId) => {
-  axios({
-    method: 'delete',
-    url: `http://127.0.0.1:8000/articles/comments/${commentId}/delete/`,
-    headers: {
-      Authorization: `Token ${profilestore.token}`
-    }
-  })
-  .then(() => {
-    comments.value = comments.value.filter(comment => comment.id !== commentId)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+  if (confirm("댓글을 삭제하시겠습니까?") == true) {
+    axios({
+      method: 'delete',
+      url: `http://127.0.0.1:8000/articles/comments/${commentId}/delete/`,
+      headers: {
+        Authorization: `Token ${profilestore.token}`
+      }
+    })
+    .then(() => {
+      comments.value = comments.value.filter(comment => comment.id !== commentId)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
 }
 
 // 댓글 목록 가져오기
