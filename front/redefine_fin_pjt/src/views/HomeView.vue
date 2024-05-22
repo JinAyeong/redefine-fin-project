@@ -12,6 +12,7 @@
                       </div>
                   </div>
               </div>
+<<<<<<< HEAD
               <!-- <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div> -->
           </div>
       </div>
@@ -27,6 +28,20 @@
                   <div class="row gx-5 row-cols-1 row-cols-md-2">
                       <div class="col mb-5 h-100">
                         <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="C:\ssafy\redefine-fin-project\front\imgs\map_icon.png" alt="..." /></div>
+=======
+          </header>
+          
+          
+          <!-- Features section-->
+          <section class="py-5" id="features">
+              <div class="container px-5 my-5">
+                  <div class="row gx-5">
+                      <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">reFINe의 다양한 서비스를 이용해보세요 !</h2></div>
+                      <div class="col-lg-8">
+                          <div class="row gx-5 row-cols-1 row-cols-md-2">
+                              <div class="col mb-5 h-100">
+                                <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="C:\Users\Jin\Desktop\PJT\redefine-fin-project\front\imgs\map_icon.png" alt="..." /></div>
+>>>>>>> cc64c92830198db5e4372417340bd34cc9d8066b
 
                           <!-- <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div> -->
                           <h2 class="h5">통합 금융 상품 조회</h2>

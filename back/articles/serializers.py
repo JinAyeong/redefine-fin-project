@@ -6,6 +6,7 @@ from accounts.serializers import ProfileSerializer
 class ArticleListSerializer(serializers.ModelSerializer):
     
     user_name = serializers.CharField(source='user.username', read_only=True)
+    user_name_2 = serializers.CharField(source='user.name', read_only=True)
     class Meta:
         model = Article
         fields = '__all__'
@@ -15,6 +16,7 @@ class ArticleListSerializer(serializers.ModelSerializer):
 # 게시글 생성, 게시글 상세조회/수정
 class ArticleDetailSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.username', read_only=True)
+    user_name_2 = serializers.CharField(source='user.name', read_only=True)
     # like_users_count = serializers.IntegerField(source='like_users.count', read_only=True)
     class Meta:
         model = Article
