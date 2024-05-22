@@ -21,7 +21,7 @@ import { useRouter } from 'vue-router';
 
 const depositstore = useDepositStore()
 const profilestore = useProfileStore()
-const router = useRouter
+const router = useRouter()
 
 const props = defineProps({
   savingOption: {

@@ -5,6 +5,7 @@
 """
 class User(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True)
+    nickname = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(max_length=254, blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     money = models.IntegerField(blank=True, null=True)
@@ -94,10 +95,9 @@ while i < N:
 
 
 
-
 # 저장 위치는 프로젝트 구조에 맞게 수정합니다.
 
-save_dir = 'C:\\Users\\SSAFY\\Desktop\\final-pjt\\redefine-fin-project\\back\\accounts\\fixtures\\accounts\\user_data.json'
+save_dir = 'C:\\Users\\SSAFY\\Desktop\\PJT\\redefine-fin-project\\back\\accounts\\fixtures\\accounts\\user_data.json'
 
 with open(save_dir, 'w', encoding="utf-8") as f:
     f.write('[')

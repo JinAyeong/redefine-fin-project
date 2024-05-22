@@ -5,15 +5,14 @@
 
     <ul v-if="recommendstore.recommendedProducts.length">
       <li v-for="product in recommendstore.recommendedProducts" :key="product">
-        <!-- {{ product }} -->
         <p>은행명:{{ product.kor_co_nm }}</p>
         <p>금융코드:{{ product.fin_prdt_cd }}</p>
         <p>금융 상품명:{{ product.fin_prdt_nm }}</p>
         <p>금융 상품 설명:{{ product.spcl_cnd }}</p>
-        <a href="http://localhost:5173/deposit/detail/{{ product.fin_prdt_cd }}">가입</a>
+        <!-- <a href="http://localhost:5173/deposit/detail/{{ product.fin_prdt_cd }}">관심 상품 등록</a> -->
       </li>
     </ul>
-    <!-- {{ recommendstore.productAuto }} -->
+    <button>더 많은 상품 보러 가기</button>
   </div>
 </template>
 
@@ -28,15 +27,18 @@ import { useRouter, useRoute } from "vue-router";
 
 const recommendstore = useRecommendStore()
 const profilestore = useProfileStore()
+const depositstore = useDepositStore()
 const route = useRoute();
+const router = useRouter()
 
 onMounted(() => {
   recommendstore.recommendAuto(profilestore.token)
 })
 
 const productCd = route.params.id;
+
 const product = computed(() => {
-  return profilestore.deposit_products?.filter(
+  return depositstore.deposit_products?.filter(
     (product) => product.fin_prdt_cd === productCd
   )[0];
 });
