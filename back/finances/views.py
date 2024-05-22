@@ -1,8 +1,11 @@
+from django.db.models import Q
 import requests
 from django.conf import settings
 from django.http import JsonResponse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from accounts.models import User
 from .serializers import DepositProductsSerializer, DepositOptionsSerializer, SavingProductsSerializer, SavingOptionsSerializer
 from .models import DepositProducts, DepositOptions, SavingProducts, SavingOptions
 from redefine_fin_project.settings import DEPOSIT_API
@@ -285,3 +288,42 @@ def saving_products_filter(request):
     except Exception as e:
         logger.error(f"Error fetching saving products: {e}")
         return Response({"error": str(e)}, status=500)
+    
+
+# 나와 비슷한 사람들이 많이 가입한 상품 찾기
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def recommend_similar_product(request):
+    age = request.user.age
+    money = request.user.money
+    salary = request.user.salary
+    age_scope = 5
+    money_scope = 1000000
+    salary_scope = 1500000
+
+    correct_users = User.objects.filter(
+        Q(age__range=(age - age_scope, age + age_scope)) &
+        Q(money__range=(money - money_scope, money + money_scope)) &
+        Q(salary__range=(salary - salary_scope, salary + salary_scope)) &
+        ~Q(id=request.user.id)  # 나 자신을 제외
+    )
+
+    # 가입한 상품 목록 리스트로 변환
+    product_lists = correct_users.values_list('financial_products', flat=True)
+    
+    # 상품 목록을 하나의 리스트로 통합
+    all_products = []
+    for product_list in product_lists:
+        if product_list:
+            all_products.extend(product_list.split(','))
+
+    # 상품별 가입자 수를 계산
+    from collections import Counter
+    product_counter = Counter(all_products)
+
+    # 가장 많이 가입한 상품 상위 5개 반환
+    most_common_products = product_counter.most_common(5)
+
+    return Response({
+        'most_common_products': most_common_products
+    })
