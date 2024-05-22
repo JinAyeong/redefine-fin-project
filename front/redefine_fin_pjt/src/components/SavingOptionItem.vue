@@ -5,8 +5,8 @@
     <p>저축 단위: {{ savingOption.save_trm }} 개월</p>
     <p>저축금리: {{ savingOption.intr_rate }} %</p>
     <p>최고 우대 금리: {{ savingOption.intr_rate2 }} %</p>
-    <button @click="addOrCancelProduct(savingOption.fin_prdt_cd, savingOption.save_trm)">
-      {{ isProductAdded(savingOption.fin_prdt_cd, savingOption.save_trm) ? '가입 취소 하기' : '상품 가입하기' }}
+    <button @click="addOrCancelProduct(savingOption.fin_prdt_cd, savingOption.id)">
+      {{ isProductAdded(savingOption.fin_prdt_cd, savingOption.id) ? '가입 취소 하기' : '상품 가입하기' }}
     </button>   
     <hr>
   </div>

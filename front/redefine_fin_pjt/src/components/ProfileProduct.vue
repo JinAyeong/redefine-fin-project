@@ -9,7 +9,7 @@
       <p>저축 금리: {{ product.options.intr_rate }}%</p>
       <p>최고 우대 금리: {{ product.options.intr_rate2 }}%</p>
       <p>저축 기간: {{ product.options.save_trm }}개월</p>
-      <button @click="addProduct(product.options.fin_prdt_cd, product.options.save_trm)">관심 상품 등록 취소</button>
+      <button @click="addProduct(product.options.fin_prdt_cd, product.options.id)">관심 상품 등록 취소</button>
     </div>
     </div>
     <div v-else>

@@ -84,11 +84,11 @@ def get_added_product(request):
     product_details = []
     
     for product in products:
-        product_cd, option_trm = product.split('/')
+        product_cd, option_id = product.split('/')
         try:
             # DepositProducts에서 제품을 찾으려고 시도
             deposit_product = DepositProducts.objects.get(fin_prdt_cd=product_cd)
-            deposit_options = DepositOptions.objects.get(product=deposit_product, save_trm=option_trm)
+            deposit_options = DepositOptions.objects.get(product=deposit_product, id=option_id)
 
             product_data = {
                 'product': DepositProductsSerializer(deposit_product).data,
@@ -100,7 +100,7 @@ def get_added_product(request):
             # DepositProducts에 제품이 없으면 SavingProducts에서 찾음
             try:
                 saving_product = SavingProducts.objects.get(fin_prdt_cd=product_cd)
-                saving_options = SavingOptions.objects.filter(product=saving_product, save_trm=option_trm).first()
+                saving_options = SavingOptions.objects.filter(product=saving_product, id=option_id).first()
 
                 product_data = {
                     'product': SavingProductsSerializer(saving_product).data,
@@ -116,7 +116,7 @@ def get_added_product(request):
 # 관심상품 등록 유무 확인
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def check_product(request, product_cd, option_trm):
+def check_product(request, product_cd, option_id):
     user = request.user
     
     if not user.financial_products:
@@ -124,7 +124,7 @@ def check_product(request, product_cd, option_trm):
     else:
         products = user.financial_products.split(',')
 
-    elem = f'{product_cd}/{option_trm}'
+    elem = f'{product_cd}/{option_id}'
 
     if elem in products:
         return Response(True)
