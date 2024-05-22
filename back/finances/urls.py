@@ -21,4 +21,7 @@ urlpatterns = [
     path('saving-products-filter/', views.saving_products_filter),
     # 특정 적금 상품의 옵션 리스트 출력
     path('saving-products-options/<str:fin_prdt_cd>/', views.saving_products_options),
+
+    # 나와 비슷한 사람들이 많이 가입한 상품 찾기
+    path('recommend-similar-product/', views.recommend_similar_product),
 ]
