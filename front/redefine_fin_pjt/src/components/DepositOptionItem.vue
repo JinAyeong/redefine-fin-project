@@ -1,69 +1,85 @@
 <template>
-  <div>
-    <h5>정기예금 상품 옵션 정보</h5>
-    <span>저축 금리 유형 : {{ depositOption.intr_rate_type_nm }}</span>
-    <span>저축 금리 : {{ depositOption.intr_rate }}</span>
-    <span>최고 우대 금리 : {{ depositOption.intr_rate2 }}</span>
-    <span>저축 기간 (단위: 개월) : {{ depositOption.save_trm }}</span>
-    <span v-if="productStatus !== null && productStatus">
-      <button @click="addProduct(depositOption.fin_prdt_cd, depositOption.save_trm)">관심 상품 삭제</button>
-    </span>
-    <span v-else>
-      <button @click="addProduct(depositOption.fin_prdt_cd, depositOption.save_trm)">관심 상품 등록</button>
-    </span>
+  <div class="option-item">
+    <h5>예금 상품 옵션 정보</h5>
+    <p>유형: {{ depositOption.intr_rate_type_nm }}</p>
+    <p>저축 단위: {{ depositOption.save_trm }} 개월</p>
+    <p>저축금리: {{ depositOption.intr_rate }} %</p>
+    <p>최고 우대 금리: {{ depositOption.intr_rate2 }} %</p>
+    <button @click="addOrCancelProduct(depositOption.fin_prdt_cd, depositOption.save_trm)">
+      {{ isProductAdded(depositOption.fin_prdt_cd, depositOption.save_trm) ? '가입 취소 하기' : '상품 가입하기' }}
+    </button>   
     <hr>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useDepositStore } from '@/stores/deposit';
-import { useProfileStore } from '@/stores/profile';
+import { ref, watch } from 'vue';
 import axios from 'axios';
+import { useDepositStore } from '@/stores/deposit'
+import { useProfileStore } from '@/stores/profile';
 
-const depositOption = defineProps({
+const depositstore = useDepositStore()
+const profilestore = useProfileStore()
+
+const props = defineProps({
   depositOption: {
     type: Object,
     required: true
   }
 });
 
-const depositstore = useDepositStore();
-const profilestore = useProfileStore();
-const productStatus = ref(null);
 
-// 관심상품 등록
-const addProduct = async function (product_cd, option_trm) {
-  try {
-    await depositstore.addProduct(product_cd, option_trm);
-    await checkProductStatus(product_cd, option_trm);
-  } catch (error) {
-    console.error(error);
+const isProductAdded = (product_cd, option_trm) => {
+  const products = profilestore.userProfile?.financial_products || [];
+  const elem = `${product_cd}/${option_trm}`;
+  return products.includes(elem);
+};
+
+const addOrCancelProduct = (product_cd, option_trm) => {
+  const elem = `${product_cd}/${option_trm}`;
+  if (isProductAdded(product_cd, option_trm)) {
+    cancelProduct(elem);
+  } else {
+    addProduct(product_cd, option_trm);
   }
 };
 
-// 관심상품 등록 상태 확인
-const checkProductStatus = async function (product_cd, option_trm) {
-  try {
-    const response = await axios({
-      method: 'get',
-      url: `${depositstore.API_URL}/accounts/profile/check_product/${product_cd}/${option_trm}`,
-      headers: {
-        Authorization: `Token ${profilestore.token}`
-      },
-    });
-    productStatus.value = response.data;
+const addProduct = (product_cd, option_trm) => {
+  axios.post(`${depositstore.API_URL}/accounts/profile/add_product/${product_cd}/${option_trm}`, {}, {
+    headers: {
+      Authorization: `Token ${profilestore.token}`
+    }
+  })
+  .then(response => {
     console.log(response.data);
-  } catch (error) {
+    profilestore.getProfile();
+  })
+  .catch(error => {
     console.error(error);
-  }
+  });
 };
 
-// 컴포넌트가 마운트되면 관심상품 상태 확인
-onMounted(() => {
-  checkProductStatus(depositOption.fin_prdt_cd, depositOption.save_trm);
-});
+const cancelProduct = (elem) => {
+  axios.post(`${depositstore.API_URL}/accounts/profile/add_product/${elem}`, {}, {
+    headers: {
+      Authorization: `Token ${profilestore.token}`
+    }
+  })
+  .then(response => {
+    console.log(response.data);
+    profilestore.getProfile();
+  })
+  .catch(error => {
+    console.error(error);
+  });
+};
+
+
 </script>
 
+
 <style scoped>
+.option-item {
+  margin-bottom: 1rem;
+}
 </style>
