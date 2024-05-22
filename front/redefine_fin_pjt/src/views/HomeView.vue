@@ -30,7 +30,7 @@
                       <div class="col-lg-8">
                           <div class="row gx-5 row-cols-1 row-cols-md-2">
                               <div class="col mb-5 h-100">
-                                <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="C:\ssafy\redefine-fin-project\front\imgs\map_icon.png" alt="..." /></div>
+                                <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="C:\Users\Jin\Desktop\PJT\redefine-fin-project\front\imgs\map_icon.png" alt="..." /></div>
 
                                   <!-- <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div> -->
                                   <h2 class="h5">통합 금융 상품 조회</h2>
