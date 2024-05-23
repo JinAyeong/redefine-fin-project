@@ -7,7 +7,7 @@
             <section class="py-5">
                 <div class="container px-5">
                     <!-- Contact form-->
-                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5" style="width: 70%; margin: auto;">
                         <div class="text-center mb-5">
                             <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
                             <h1 class="fw-bolder">회원가입</h1>
@@ -19,32 +19,32 @@
                                     <!-- username input-->
                                     <div class="form-floating mb-3">
                                         <input class="form-control" v-model.trim="username" id="username" type="text" placeholder="Enter your ID..." data-sb-validations="required" />
-                                        <label for="name">ID</label>
+                                        <label for="name">아이디</label>
                                         <div class="invalid-feedback" data-sb-feedback="name:required">ID is required.</div>
                                     </div>
                                     <!-- Name input-->
                                     <div class="form-floating mb-3">
                                         <input class="form-control" v-model.trim="name" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                        <label for="name">Full name</label>
+                                        <label for="name">이름</label>
                                         <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                                     </div>
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
                                         <input class="form-control" v-model.trim="email" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                        <label for="email">Email address</label>
+                                        <label for="email">이메일</label>
                                         <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                         <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                                     </div>
                                     <!-- password1 input-->
                                     <div class="form-floating mb-3">
                                         <input class="form-control" v-model.trim="password1" id="password1" type="password" placeholder="Enter your password..." data-sb-validations="required" />
-                                        <label for="name">password</label>
+                                        <label for="name">비밀번호</label>
                                         <div class="invalid-feedback" data-sb-feedback="name:required">password is required.</div>
                                     </div>
                                     <!-- password2 input-->
                                     <div class="form-floating mb-3">
                                         <input class="form-control" v-model.trim="password2" id="password2" type="password" placeholder="Enter your password confirm..." data-sb-validations="required" />
-                                        <label for="name">password confirm</label>
+                                        <label for="name">비밀번호 확인</label>
                                         <div class="invalid-feedback" data-sb-feedback="name:required">password confirm is required.</div>
                                     </div>
                                     <!-- age input-->
@@ -91,58 +91,6 @@
         </main>
     </body>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- <div>
-        <h1>SignUp Page</h1>
-        <form @submit.prevent="signUp">
-            <div>
-                <label for="username">username : </label>
-                <input type="text" v-model.trim="username" id="username">
-            </div>
-            <div>
-                <label for="name">name : </label>
-                <input type="text" v-model.trim="name" id="name">
-            </div>
-            <div>
-                <label for="email">email : </label>
-                <input type="text" v-model.trim="email" id="email">
-            </div>
-            <div>
-                <label for="password1">password : </label>
-                <input type="password" v-model.trim="password1" id="password1">
-            </div>
-            <div>
-                <label for="password2">password confirmation : </label>
-                <input type="password" v-model.trim="password2" id="password2">
-            </div>
-            <div>
-                <label for="age">age : </label>
-                <input type="number" v-model.trim="age" id="age">
-            </div>
-            <div>
-                <label for="money">money : </label>
-                <input type="number" v-model.trim="money" id="money">
-            </div>
-            <div>
-                <label for="salary">salary : </label>
-                <input type="number" v-model.trim="salary" id="salary">
-            </div>
-            <input type="submit" value="SignUp">
-        </form>
-    </div> -->
 </template>
 
 <script setup>

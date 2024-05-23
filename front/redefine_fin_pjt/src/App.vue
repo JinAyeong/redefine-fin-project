@@ -3,7 +3,11 @@
           <!-- Navigation-->
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
               <div class="container px-5">
+<<<<<<< HEAD
                   <a class="navbar-brand" href="http://localhost:5173/"><img src="C:\ssafy\redefine-fin-project\front\imgs\Logo.png" alt=""></a>
+=======
+                  <a class="navbar-brand" href="http://localhost:5173/"><img src="" alt=""></a>
+>>>>>>> a8f8ca531613a35781e859798ea31d2ec5a3f373
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -16,7 +20,8 @@
 
                           <span v-if="profilestore.userName" class="navbar-nav mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" @click="profilestore.logOut">로그아웃</a></li>
-                            <li class="nav-item"><a class="nav-link">{{ profilestore.userProfile.name }}님 환영합니다</a></li>
+                            <li class="nav-item"><RouterLink class="nav-link" :to="{name : 'profile'}">{{ profilestore.userProfile.name }}님 환영합니다</RouterLink></li>
+                            <!-- <li class="nav-item"><a class="nav-link" @click="">{{ profilestore.userProfile.name }}님 환영합니다</a></li> -->
                           </span>
 
                           <span v-else class="navbar-nav mb-2 mb-lg-0">

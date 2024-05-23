@@ -181,6 +181,7 @@ export const useProfileStore = defineStore('profile', () => {
       })
       .catch((error) => {
         console.log(error)
+        console.log(token.value)
         alert("비밀번호 변경에 실패했습니다. 다시 시도해 주세요")
       })
   }

@@ -12,6 +12,10 @@
                       </div>
                   </div>
               </div>
+<<<<<<< HEAD
+=======
+              <!-- <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div> -->
+>>>>>>> a8f8ca531613a35781e859798ea31d2ec5a3f373
           </div>
       </div>
   </header>
@@ -25,8 +29,13 @@
               <div class="col-lg-8">
                   <div class="row gx-5 row-cols-1 row-cols-md-2">
                       <div class="col mb-5 h-100">
+<<<<<<< HEAD
                         <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="..\redefine-fin-project\front\imgs\map_icon.png" alt="..." /></div>
           
+=======
+                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="" alt="..." /></div>
+
+>>>>>>> a8f8ca531613a35781e859798ea31d2ec5a3f373
                           <!-- <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div> -->
                           <h2 class="h5">통합 금융 상품 조회</h2>
                           <p class="mb-0">
