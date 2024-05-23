@@ -54,9 +54,15 @@
 
 ## ✅ 설계 내용 및 실제 구현 정도
 
+### 0️⃣ 홈화면
+![alt text](front/redefine_fin_pjt/src/assets/imgs/home.PNG)
+- nav / main / footer로 구성
+- 내브바에 주요 기능으로 가는 링크 출력
+- 로그인 여부에 따라 다른 화면 출력
+
 ### 1️⃣ Authenticated
+![alt text](front/redefine_fin_pjt/src/assets/imgs/login.PNG)
 - 회원가입 / 회원탈퇴 / 로그인 / 로그아웃 기능
-- 인증을 위한 페이지 css
 - 로그인 유무에 따라 페이지 출력, 사용기능 차별화
 
 ### 2️⃣ 게시글 CRUD
