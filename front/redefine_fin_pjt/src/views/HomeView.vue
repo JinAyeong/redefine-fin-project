@@ -232,14 +232,14 @@
               <div class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center">
                   <div class="col mb-5 mb-5 mb-xl-0">
                       <div class="text-center">
-                          <img class="img-fluid rounded-circle mb-4 team-img" src="" alt="진아영" />
+                          <img class="img-fluid rounded-circle mb-4 team-img" src="@/assets/imgs/ay_profile.jpg" alt="진아영" />
                           <h5 class="fw-bolder">진아영</h5>
                           <div class="fst-italic text-muted">Jin Ayoung</div>
                       </div>
                   </div>
                   <div class="col mb-5 mb-5 mb-xl-0">
                       <div class="text-center">
-                          <img class="img-fluid rounded-circle mb-4 team-img" src="../../../imgs/IMG_0707.jpg" alt="홍수인" />
+                          <img class="img-fluid rounded-circle mb-4 team-img" src="@/assets/imgs/IMG_0707.jpg" alt="홍수인" />
                           <h5 class="fw-bolder">홍수인</h5>
                           <div class="fst-italic text-muted">Hong Suin</div>
                       </div>
