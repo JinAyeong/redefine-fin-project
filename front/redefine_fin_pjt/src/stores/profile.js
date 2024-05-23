@@ -15,14 +15,6 @@ export const useProfileStore = defineStore('profile', () => {
     return token.value !== null
   })
 
-  // watch(token, (newToken) => {
-  //   if (newToken) {
-  //     localStorage.setItem('token', newToken)
-  //   } else {
-  //     localStorage.removeItem('token')
-  //   }
-  // })
-
   // 회원가입
   const signUp = function(payload) {
     const { username, email, password1, password2, name, age, money, salary } = payload
@@ -88,7 +80,6 @@ export const useProfileStore = defineStore('profile', () => {
   // 로그인
   const logIn = function (payload) {
     const { username, password } = payload
-
     axios({
       method: 'post',
       url: `${API_URL}/accounts/login/`,
@@ -97,17 +88,19 @@ export const useProfileStore = defineStore('profile', () => {
       }
     })
       .then(response => {
-        console.log(response.data)
         token.value = response.data.key
         userName.value = username
         console.log('로그인 성공!')
+        console.log(token.value)
         getProfile()
+        console.log(userProfile.value)
         router.push({name:'home'})
       })
       .catch(error => {
         console.log(error)
       })
   }
+  
 
   // 로그아웃
   const logOut = function () {
@@ -181,7 +174,6 @@ export const useProfileStore = defineStore('profile', () => {
       })
       .catch((error) => {
         console.log(error)
-        console.log(token.value)
         alert("비밀번호 변경에 실패했습니다. 다시 시도해 주세요")
       })
   }
