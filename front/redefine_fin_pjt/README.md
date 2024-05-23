@@ -1,29 +1,95 @@
-# redefine_fin_pjt
+# 금융상품 비교 애플리케이션
 
-This template should help get you started developing with Vue 3 in Vite.
+---
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 개요
 
-## Customize configuration
+- 주제 : 예적금 상품 비교 및 추천 웹 사이트
+- 서비스명 : redeFINe
+    - 금융을 재정의한다는 의미로 회원 맞춤형 정보 제공, 분석, 상품 추천 기능을 의미합니다.
+- 프로젝트 기간 : 2024.05.16 ~ 2024.05.23
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## 개발 일지
 
-```sh
-npm install
-```
+- 팀원 정보 및 업무 분담 내역
 
-### Compile and Hot-Reload for Development
+| 날짜 | 수인 | 아영 |
+| --- | --- | --- |
+| 2024 / 05 / 16 | 모델 구성, ERD 작성, vue 컴포넌트 생성 | 컴포넌트 구성, 모델 구성, 게시판 crud 구현 |
+| 2024 / 05 / 17 | 환율 api 데이터 조회/ db저장 | articles model, serializer 설계 |
+| 2024 / 05 / 18 | 지도 완성 | article crud 구현 |
+| 2024 / 05 / 19 | 댓글 crud, article 수정 기능 | profile페이지 구현, Authentication 기능 구현 |
+| 2024 / 05 / 20 | 게시글 좋아요 기능, 프로필 페이지에 좋아요한 목록 출력, dummy data 생성, 환율계산기 완성 | 예적금 정보 api 데이터 조회, 예적금 리스트 출력, 예적금 상세페이지 구현 |
+| 2024 / 05 / 21 | 예적금 상품 필터링, AI Chatbot 구현 | 예적금 상품의 관심 상품 등록/취소, 추천 알고리즘 구현, 프로필 정보 출력 |
+| 2024 / 05 / 22 | 로고 생성 , css - 내브바 / 예적금상품 리스트 / 예적금 상품 필터 | css - 프로필 정보 / 관심있는 게시물과 상품 정보 / 게시판 |
+| 2024 / 05 / 23 |  css - 예적금 상품 디테일 / chat-bot 페이지 / 메인페이지  | css - 은행 지도 / 환율 페이지 / 추천상품 페이지 |
 
-```sh
-npm run dev
-```
 
-### Compile and Minify for Production
+## 사용 기술
+- frontend
+    - 사용 언어 : Javascript
+    - 프레임워크 : Vue
+- backend
+    - 언어 : python
+    - 프레임워크 : django
 
-```sh
-npm run build
-```
+
+## **데이터베이스 모델링 (ERD)**
+![alt text](../../image-1.png)
+
+
+## 설계 내용 및 실제 구현 정도
+
+### 1. Authenticated
+
+- 회원가입 / 회원탈퇴 / 로그인 / 로그아웃 기능
+- 인증을 위한 페이지 css
+- 로그인 유무에 따라 페이지 출력, 사용기능 차별화
+
+### 2. 게시글 CRUD
+
+- 게시글 작성 / 조회 / 수정 / 삭제 기능
+- 본인 게시글만 수정 / 삭제 가능 하도록 구현
+- 본인 게시물이 아닌 게시물에 좋아요 버튼 출력
+    - 게시물과 회원정보를 N : 1로 저장
+
+### 3. 댓글 CRUD
+
+- 댓글 작성 / 조회 / 삭제 기능 구현
+- 본인 댓글만 삭제 가능 하도록 구현
+
+### 4. 금융상품 정보 저장 / 조회
+
+- 오픈 API를 이용해 금융 정보 DB에 저장
+    - 금융 상품 코드와 상품별 옵션 정보를 N : 1로 저장
+- 저장된 금융 상품 조회 기능
+    - 필터 추가하여 은행별로 조회 가능
+    - 상품별 옵션 정보 조회
+- 금융상품 관심 상품으로 등록
+    - user 프로필에 금융 상품 코드와 옵션 번호를 문자열로 저장 / 취소 기능 구현
+
+### 5. 금융상품 추천 알고리즘
+
+- 회원가입시 저장된 회원 정보 ( 나이, 연봉, 자산 ) 로 자신과 비슷한 회원이 많이 가입한 (상위 5개) 금융 상품 추천
+
+### 6. 지도 검색
+
+- API를 이용해 카카오맵 불러오기
+- 원하는 위치를 입력하면 은행 정보 출력
+
+### 7. 환율 계산기
+
+- 페이지를 로드할때마다 API를 이용해 새로운 환율 정보를 불러오기
+- 원하는 환전 금액을 입력하면 환율 정보 제공
+
+### 8. AI 챗봇
+
+- AI를 활용하여 서비스 및 데이터 검색
+
+
+## 느낀 점, 후기
+
+- 아영
+    - 싸피에서 약 3개월간 학습한 django와 javascript를

@@ -57,7 +57,7 @@ const addProduct = (product_cd, option_trm) => {
     console.log(response.data);
     profilestore.getProfile();
     if (confirm("관심상품 목록을 확인하시겠습니까?") == true) {
-      router.push({name: 'profile'})
+      router.push({name: 'profileproduct'})
     }
   })
   .catch(error => {

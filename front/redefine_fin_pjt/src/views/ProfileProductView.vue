@@ -16,6 +16,10 @@
               <div class="col-lg-4 col-md-6 mb-4" v-for="product in products" :key="product.product.fin_prdt_cd">
                 <div class="card h-100">
                   <div class="card-body p-4">
+                    <div class="h5 card-title mb-3">
+                      {{ product.product.fin_prdt_nm }}
+                    </div>
+                    <hr>
                     <div class="mb-3 d-flex justify-content-between">
                       <strong>저축 금리</strong>
                       <div>
@@ -53,12 +57,13 @@
               </div>
               <hr style="margin-top: 50px;">
               <div class="col-12" style="margin-top: 70px;">
+                <h3 class="fw-bolder">나의 관심 상품 비교</h3>
                 <canvas id="interestRateChart"></canvas>
               </div>
             </div>
-            <div v-else>
+            <div v-else class="row gx-5">
               <p>관심 상품이 없습니다.</p>
-              <button @click="router.push({name: 'finance'})">상품 보러 가기 !</button>
+              <button @click="router.push({name: 'deposit'})" class="btn btn-outline-secondary">상품 보러 가기 !</button>
             </div>
           </div>
         </div>
@@ -106,7 +111,7 @@ const fetchProducts = () => {
 // 관심상품 등록 취소
 const addProduct = function (product_cd, option_trm) {
   depositstore.addProduct(product_cd, option_trm)
-  alert('구매가 취소되었습니다.');
+  alert('관심상품 등록이 취소되었습니다.');
   fetchProducts();
   router.go(0)
 }

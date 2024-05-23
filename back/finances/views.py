@@ -299,8 +299,8 @@ def recommend_similar_product(request):
     money = request.user.money
     salary = request.user.salary
     age_scope = 5
-    money_scope = 10000000
-    salary_scope = 150000000
+    money_scope = 150000000
+    salary_scope = 10000000
 
     correct_users = User.objects.filter(
         Q(age__range=(age - age_scope, age + age_scope)) &
