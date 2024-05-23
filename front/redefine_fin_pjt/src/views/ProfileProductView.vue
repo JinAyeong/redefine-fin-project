@@ -1,5 +1,5 @@
 <template>
-    <body class="d-flex flex-column">
+  <body class="d-flex flex-column">
     <main class="flex-shrink-0">
       <!-- Pricing section-->
       <section class="bg-light py-5">
@@ -13,10 +13,9 @@
           <div class="row gx-5 justify-content-center">
             <!-- Pricing card enterprise-->
             <div v-if="products.length">
-              <div class="col-lg-6 col-xl-4 product" v-for="product in products" :key="product.product.fin_prdt_cd">
-                <div class="card">
-                  <div class="card-body p-5">
-                    <!-- <div class="small text-uppercase fw-bold text-muted">{{ product.product.kor_co_nm }}</div> -->
+              <div class="col-lg-4 col-md-6 product" v-for="product in products" :key="product.product.fin_prdt_cd">
+                <div class="card mb-4">
+                  <div class="card-body p-4">
                     <div class="mb-3 d-flex justify-content-between">
                       <strong>저축 금리</strong>
                       <div>
@@ -52,22 +51,19 @@
                   </div>
                 </div>
               </div>
+              <canvas id="interestRateChart"></canvas>
+            </div>
+            <div v-else>
+              <p>관심 상품이 없습니다.</p>
+              <button @click="router.push({name: 'finance'})">상품 보러 가기 !</button>
             </div>
           </div>
+        </div>
+        <div>
         </div>
       </section>
     </main>
   </body>
-
-  <div>
-    <div v-if="products.length">
-    <canvas id="interestRateChart"></canvas>
-    </div>
-    <div v-else>
-    <p>관심 상품이 없습니다.</p>
-    <button @click="router.push({name: 'finance'})">상품 보러 가기 !</button>
-    </div>
-  </div>
 </template>
 
 <script setup>
@@ -205,7 +201,12 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
 .product {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem; /* 카드 사이 간격을 조정 */
+}
+
+.card {
+  width: 80%; /* 카드 너비를 0.8배로 줄임 */
 }
 </style>
