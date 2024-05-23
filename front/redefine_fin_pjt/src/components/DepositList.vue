@@ -1,8 +1,25 @@
 <template>
-  <div>
-    <div>
-      <label for="filter">필터: </label>
-      <select v-model="selectedBank" id="filter">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">상품 조회</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="http://localhost:5173/finance/deposit">예금</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://localhost:5173/finance/saving">적금</a>
+          </li>
+          <li class="nav-item dropdown">
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="d-flex">
+      <select v-model="selectedBank" class="form-select me-2 custom-select-width" aria-label="은행을 선택해주세요">
         <option value="우리은행">우리은행</option>
         <option value="한국스탠다드차타드은행">한국스탠다드차타드은행</option>
         <option value="대구은행">대구은행</option>
@@ -22,13 +39,17 @@
         <option value="주식회사 카카오뱅크">주식회사 카카오뱅크</option>
         <option value="코스뱅크 주식회사">코스뱅크 주식회사</option>
       </select>
-      <button type="submit" @click="fetchDepositProducts">검색</button>
+      <button @click="fetchDepositProducts" type="button" class="btn btn-outline-secondary">검색</button>
     </div>
+  </nav>
 
+  <h2 class="fw-bolder fs-5 mb-4">예금 상품 목록</h2>
+  <div class="row">
     <DepositListItem 
       v-for="depositProduct in depositProducts"
       :key="depositProduct.fin_prdt_cd"
-      :depositProduct="depositProduct"/>
+      :depositProduct="depositProduct"
+    />
   </div>
 </template>
 
@@ -63,4 +84,20 @@ watch(() => depositstore.depositProducts, (newProducts) => {
 </script>
 
 <style scoped>
+button {
+  white-space: nowrap;
+}
+
+/* select와 button의 높이를 동일하게 맞추기 위한 추가 스타일 */
+.form-select,
+.btn {
+  height: calc(2.25rem + 2px); /* Bootstrap 기본 높이와 동일 */
+  padding: 0.375rem 0.75rem;   /* Bootstrap 기본 패딩 */
+  font-size: 1rem;            /* Bootstrap 기본 폰트 크기 */
+}
+
+.custom-select-width {
+  width: 300px; /* 원하는 가로 길이로 설정 */
+}
 </style>
+

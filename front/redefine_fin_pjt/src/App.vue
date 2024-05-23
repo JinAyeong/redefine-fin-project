@@ -9,7 +9,7 @@
                       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><RouterLink class="nav-link" :to="{name : 'article'}">게시판</RouterLink></li>
                           <li class="nav-item"><RouterLink class="nav-link" :to="{name : 'bankmap'}">지도</RouterLink></li>
-                          <li class="nav-item"><RouterLink class="nav-link" :to="{name : 'finance'}">예적금상품</RouterLink></li>
+                          <li class="nav-item"><RouterLink class="nav-link" :to="{name : 'deposit'}">예적금상품</RouterLink></li>
                           <li class="nav-item"><RouterLink class="nav-link" :to="{name : 'exchange'}">환율계산기</RouterLink></li>
                           <li class="nav-item"><RouterLink class="nav-link" :to="{name : 'aichat'}">AI Chat</RouterLink></li>
                           <li class="nav-item"></li>
@@ -28,6 +28,7 @@
               </div>
           </nav>
       </main>
+      
     <RouterView />
 </template>
 
