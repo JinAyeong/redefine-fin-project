@@ -1,14 +1,16 @@
 <template>
-  <div class="option-item">
-    <h5>예금 상품 옵션 정보</h5>
-    <p>유형: {{ depositOption.intr_rate_type_nm }}</p>
-    <p>저축 단위: {{ depositOption.save_trm }} 개월</p>
-    <p>저축금리: {{ depositOption.intr_rate }} %</p>
-    <p>최고 우대 금리: {{ depositOption.intr_rate2 }} %</p>
-    <button @click="addOrCancelProduct(depositOption.fin_prdt_cd, depositOption.id)">
-      {{ isProductAdded(depositOption.fin_prdt_cd, depositOption.id) ? '가입 취소 하기' : '상품 가입하기' }}
-    </button>   
-    <hr>
+  <div class="option-item card shadow-sm p-3 mb-4 position-relative">
+    <div class="card-body">
+      <h5 class="card-title">예금 상품 옵션 정보</h5>
+      <hr>
+      <p class="card-text">유형: {{ depositOption.intr_rate_type_nm }}</p>
+      <p class="card-text">저축 단위: {{ depositOption.save_trm }} 개월</p>
+      <p class="card-text">저축금리: {{ depositOption.intr_rate }} %</p>
+      <p class="card-text">최고 우대 금리: {{ depositOption.intr_rate2 }} %</p>
+      <button class="btn btn-outline-navy fixed-button" @click="addOrCancelProduct(depositOption.fin_prdt_cd, depositOption.id)">
+        {{ isProductAdded(depositOption.fin_prdt_cd, depositOption.id) ? '가입 취소 하기' : '상품 가입하기' }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -86,5 +88,33 @@ const cancelProduct = (elem) => {
 <style scoped>
 .option-item {
   margin-bottom: 1rem;
+  position: relative;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  margin-bottom: 0.5rem;
+}
+
+.btn-outline-navy {
+  color: #001f3f;
+  border-color: #001f3f;
+  background-color: transparent;
+}
+
+.btn-outline-navy:hover {
+  color: white;
+  background-color: #001f3f;
+  border-color: #001f3f;
+}
+
+.fixed-button {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
 }
 </style>
