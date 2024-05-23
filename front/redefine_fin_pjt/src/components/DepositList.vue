@@ -1,24 +1,22 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">상품 조회</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="http://localhost:5173/finance/deposit">예금</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://localhost:5173/finance/saving">적금</a>
-          </li>
-          <li class="nav-item dropdown">
-          </li>
-        </ul>
+        <a class="navbar-brand" style="margin-left: 10px; display: flex; align-items: center; height: 100%;" href="#">상품 조회</a>
+        <h5 style="margin: 0; display: flex; align-items: center; height: 100%;"><a class="nav-link" href="http://localhost:5173/finance/saving">|</a></h5>
+        <div style="margin-left: 20px;">
+          <ul class="navbar-nav" style="display: flex; align-items: center; height: 100%;">
+            <li class="nav-item">
+              <h5 style="margin: 0; display: flex; align-items: center; height: 100%;"><a class="nav-link" style="color:cornflowerblue;" href="http://localhost:5173/finance/deposit">예금</a></h5>
+            </li>
+            <li class="nav-item">
+              <h5 style="margin: 0; display: flex; align-items: center; height: 100%;"><a class="nav-link" href="http://localhost:5173/finance/saving">적금</a></h5>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="d-flex">
+    <div class="d-flex" style="margin-right: 20px;">
       <select v-model="selectedBank" class="form-select me-2 custom-select-width" aria-label="은행을 선택해주세요">
         <option value="우리은행">우리은행</option>
         <option value="한국스탠다드차타드은행">한국스탠다드차타드은행</option>
@@ -43,7 +41,9 @@
     </div>
   </nav>
 
-  <h2 class="fw-bolder fs-5 mb-4">예금 상품 목록</h2>
+
+  <h2 style="margin: 50px 0 30px 10px;">예금 상품 목록</h2>
+  <hr>
   <div class="row">
     <DepositListItem 
       v-for="depositProduct in depositProducts"

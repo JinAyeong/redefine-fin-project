@@ -5,7 +5,6 @@
     class="col-lg-4 col-md-6 mb-4"
   >
     <div class="card h-100 shadow border-30">
-      <!-- <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." /> -->
       <div class="card-body p-4">
         <div class="badge bg-primary bg-gradient rounded-pill mb-2">
           {{ depositProduct.kor_co_nm }}
