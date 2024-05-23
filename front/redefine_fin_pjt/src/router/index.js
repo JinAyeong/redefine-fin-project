@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useProfileStore } from '@/stores/profile'
 
 // home
 import HomeView from '@/views/HomeView.vue'
@@ -147,6 +148,19 @@ const router = createRouter({
       component: AIChatView
     },
   ]
+})
+
+router.beforeEach((to, from) => {
+  const profilestore = useProfileStore()
+  if (to.name === 'articledetail' && profilestore.isLogin === false) {
+    window.alert('로그인 후 이용하실 수 있습니다.')
+    return { name: 'login'}
+  }
+
+  if ((to.name === 'signup' || to.name === 'login') && (profilestore.isLogin === true)) {
+    window.alert('이미 로그인 했습니다!!')
+    return { name: 'home' }
+  }
 })
 
 export default router

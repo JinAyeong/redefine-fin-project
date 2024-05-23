@@ -1,22 +1,19 @@
 <template>
-  <div>
-    <body class="d-flex flex-column">
-      <main class="flex-shrink-0">
-        <!-- Page content-->
-        <section class="py-5">
-          <div class="container px-5">
-            <!-- Contact form-->
-            <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5" style="width: 70%; margin: auto;">
-              <div class="text-center mb-5">
-                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
-                <h1 class="fw-bolder">환율 계산기</h1>
-                <p class="lead fw-normal text-muted mb-0">원하는 금액을 입력해주세요</p>
-              </div>
-              <div class="row gx-5 justify-content-center">
+
+  <div class="chat-app">
+    <main class="chat-container bg-light">
+      <!-- Page Content-->
+      <section class="chat-section">
+        <div class="container my-5">
+          <div class="text-center mb-5">
+            <h1 class="fw-bolder">환율 계산기</h1>
+            <p class="lead fw-normal text-muted mb-0">원하는 금액을 입력해주세요</p>
+          </div>
+          <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-8">
                   <form id="contactForm" data-sb-form-api-token="API_TOKEN" @submit.prevent="logIn">
                     <div class="filter-btn-group mb-3 row g-0">
-                      <button v-for="option in filterOptions" :key="option.value" @click="rate_filter = option.value" :class="{ active: rate_filter === option.value }" class="col btn btn-outline-primary me-2">{{ option.label }}</button> <!-- 변경된 부분 -->
+                      <button v-for="option in filterOptions" :key="option.value" @click="rate_filter = option.value" :class="{ active: rate_filter === option.value }" class="col btn btn-outline-primary me-1">{{ option.label }}</button> <!-- 변경된 부분 -->
                     </div>
                     <div class="input-group mb-3">
                       <label class="input-group-text" for="from_currency">From</label>
@@ -37,16 +34,14 @@
                       <button @click="convertCurrency" class="btn btn-primary" type="button">계산하기</button>
                     </div>
                     <div v-if="result !== null" class="alert alert-success">
-                      결과: {{ result }} {{ to_currency }} ({{ getCurrencyName(to_currency) }})
+                      {{ result }} {{ to_currency }} ({{ getCurrencyName(to_currency) }})
                     </div>
                   </form>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </body>
+        </div>
+      </section>
+    </main>
   </div>
 </template>
 
@@ -121,36 +116,102 @@ export default {
 </script>
 
 <style>
-/* 여기에 CSS 스타일링 추가 가능 */
-.input-group {
-  margin-bottom: 1.5rem;
+
+.chat-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 20px; /* 화면 상하좌우에 여백 추가 */
 }
 
-.input-group-text {
-  width: 80px;
+.chat-container {
+  width: 100%;
+  max-width: 700px; /* 너비를 700px로 늘림 */
+  height: 700px; /* 상하 여백을 고려한 높이 */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0; /* 상하 여백 추가 */
 }
 
-.feature {
-  font-size: 2rem;
+.chat-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+#chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-p {
-  font-size: 1.2rem;
+#chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
 }
 
-.btn-primary {
-  font-size: 1.2rem;
-  padding: 0.5rem 1rem;
+.message {
+  max-width: 80%;
+  margin: 10px; /* 위아래 여백 추가 */
+  padding: 10px;
+  border-radius: 20px;
+  word-wrap: break-word;
 }
 
-.alert {
-  font-size: 1.2rem;
+.ai-message {
+  align-self: flex-start;
+  background-color: #e3f2fd;
+  color: #1e88e5;
 }
 
+.user-message {
+  align-self: flex-end;
+  background-color: #d1c4e9;
+  color: #673ab7;
+}
+
+#user-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #f1f1f1;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
+
+#user-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-right: 10px;
+  outline: none;
+}
+
+#user-input button {
+  border: none;
+  background-color: #1e88e5;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#user-input button:hover {
+  background-color: #1565c0;
+}
 
 </style>
