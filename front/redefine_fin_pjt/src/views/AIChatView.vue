@@ -124,7 +124,7 @@ function sendMessage() {
 .chat-app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 90vh;
   justify-content: center;
   align-items: center;
   background-color: #f0f0f0;
@@ -134,7 +134,7 @@ function sendMessage() {
 .chat-container {
   width: 100%;
   max-width: 700px; /* 너비를 700px로 늘림 */
-  height: calc(100vh - 40px); /* 상하 여백을 고려한 높이 */
+  height: calc(80vh - 40px); /* 상하 여백을 고려한 높이 */
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
@@ -155,7 +155,7 @@ function sendMessage() {
 #chat-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 70%;
 }
 
 #chat-messages {
