@@ -1,15 +1,28 @@
 <template>
-  <body>
-    <div id="chat-container">
-      <div id="chat-messages">
-        <div v-for="(msg, index) in messages" :key="index" class="message">{{ msg.sender }}: {{ msg.content }}</div>
-      </div>
+  <div class="chat-app">
+    <main class="chat-container bg-light">
+      <!-- Page Content-->
+      <section class="chat-section">
+        <div class="container my-5">
+          <div class="text-center mb-5">
+            <h1 class="fw-bolder">AI Chat</h1>
+            <p class="lead fw-normal text-muted mb-0">언제든지 즉각적인 응답을 받아보세요!</p>
+          </div>
+          <div id="chat-container">
+            <div id="chat-messages">
+              <div v-for="(msg, index) in messages" :key="index" :class="['message', msg.sender === '챗봇' ? 'ai-message' : 'user-message']">
+                <strong>{{ msg.sender }}:</strong> {{ msg.content }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <div id="user-input">
-        <input v-model="userMessage" @keyup.enter="sendMessage" type="text" placeholder="# 곧 결혼하는데 좋은 예적금 없을까?" />
+        <input v-model="userMessage" @keyup.enter="sendMessage" type="text" placeholder="메시지를 입력하세요..." />
         <button @click="sendMessage">전송</button>
       </div>
-    </div>
-  </body>
+    </main>
+  </div>
 </template>
 
 <script setup>
@@ -18,7 +31,7 @@ import { ref } from 'vue'
 const messages = ref([])
 const userMessage = ref('')
 
-const OPENAI_API_KEY='sk-proj-2g7Rsh3XZPbeRzk990wrT3BlbkFJ9PIwHqZEzCv1Jvrk82jP'
+const OPENAI_API_KEY = 'sk-proj-2g7Rsh3XZPbeRzk990wrT3BlbkFJ9PIwHqZEzCv1Jvrk82jP'
 
 async function fetchAIResponse(prompt) {
   const apiEndpoint = 'https://api.openai.com/v1/chat/completions';
@@ -31,14 +44,7 @@ async function fetchAIResponse(prompt) {
     { keywords: ["적금", "적금 정보", "적금 정보 궁금"], response: "redeFINe의 적금 비교 기능을 이용해보세요!" },
     { keywords: ["주변 은행", "주변 은행 정보", "주변 은행 궁금"], response: "redeFINe의 주변 은행 지도를 이용해보세요!" },
     { keywords: ["예적금 추천", "예적금 추천해줘", "금융 상품 추천"], response: "redeFINe의 금융 상품 추천 서비스를 이용해보세요!" },
-    // "제일 예쁜 사람은 누구야?": "사용자가 '제일 예쁜 사람은 누구야?'와 비슷하게 말하면 '제일 예쁜 사람은 홍수인씨인것 같아요'",
-    // "예쁜 사람": "사용자가 '예쁜 사람'과 비슷하게 물어하면 '홍수인씨인것 같아요!'",
-    // "예쁜 사람에 대해 알려줘": "사용자가 '예쁜 사람에 대해 알려줘'와 비슷하게 말하면 '그것은 홍수인! !'",
-    // "제일 알고리즘 잘하는 사람은 누구야?":"사용자가'제일 ~한 천재 or 알고리즘 천재 누구야?'와 비슷하게 말하면 '그건 바로 진아영 님입니다. 역시 A+ 아영님'로 답해주세요.",
-    // "차유림이 누구야?": "'차유림이 누구야?'라고 물어보면 '정말 대단하신 분이죠. 이 시대의 킹'",
-    // "싸피 강사님에 대해 알려줘": "'싸피 강사님'과 관련해서 물어보면 '싸피의 최고 강사님은 정종윤, 그리고 정현조가 있습니다'",
-    // "결혼":"'결혼 예적금 추천'과 비슷하게 물어보면 '결혼을 하면 자금이 많이 필요하기 때문에 높은 금리 혜택이 있는 예적금 상품을 추천해요!'"
-]
+  ]
 
   let adjustedPrompt = prompt
 
@@ -98,7 +104,7 @@ async function fetchAIResponse(prompt) {
 }
 
 function addMessage(sender, message) {
-  messages.value.unshift({ sender, content: message });
+  messages.value.push({ sender, content: message });
 }
 
 function sendMessage() {
@@ -115,47 +121,100 @@ function sendMessage() {
 </script>
 
 <style scoped>
-body {
+.chat-app {
   display: flex;
+  flex-direction: column;
+  height: 100vh;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  background-color: #f0f0f0;
+  padding: 20px; /* 화면 상하좌우에 여백 추가 */
 }
-.message {
-  border-top: 1px solid #ccc;
-  padding: 10px;
-  margin-top: 5px;
-  background-color: #e6e6e6;
-}
-#chat-container {
-  width: 400px;
-  height: 600px;
+
+.chat-container {
+  width: 100%;
+  max-width: 700px; /* 너비를 700px로 늘림 */
+  height: calc(100vh - 40px); /* 상하 여백을 고려한 높이 */
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px 0; /* 상하 여백 추가 */
 }
+
+.chat-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+#chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 #chat-messages {
   flex: 1;
   overflow-y: auto;
   padding: 10px;
-  display: flex;
-  flex-direction: column-reverse;
 }
+
+.message {
+  max-width: 80%;
+  margin: 10px; /* 위아래 여백 추가 */
+  padding: 10px;
+  border-radius: 20px;
+  word-wrap: break-word;
+}
+
+.ai-message {
+  align-self: flex-start;
+  background-color: #e3f2fd;
+  color: #1e88e5;
+}
+
+.user-message {
+  align-self: flex-end;
+  background-color: #d1c4e9;
+  color: #673ab7;
+}
+
 #user-input {
   display: flex;
+  align-items: center;
   padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #f1f1f1;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
 }
+
 #user-input input {
   flex: 1;
   padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-right: 10px;
   outline: none;
 }
+
 #user-input button {
   border: none;
   background-color: #1e88e5;
   color: white;
-  padding: 10px 15px;
+  padding: 10px 20px;
+  border-radius: 20px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#user-input button:hover {
+  background-color: #1565c0;
 }
 </style>

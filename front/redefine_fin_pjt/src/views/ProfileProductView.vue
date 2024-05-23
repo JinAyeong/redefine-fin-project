@@ -12,14 +12,14 @@
           </div>
           <div class="row gx-5 justify-content-center">
             <!-- Pricing card enterprise-->
-            <div v-if="products.length">
-              <div class="col-lg-4 col-md-6 product" v-for="product in products" :key="product.product.fin_prdt_cd">
-                <div class="card mb-4">
+            <div v-if="products.length" class="row gx-5">
+              <div class="col-lg-4 col-md-6 mb-4" v-for="product in products" :key="product.product.fin_prdt_cd">
+                <div class="card h-100">
                   <div class="card-body p-4">
                     <div class="mb-3 d-flex justify-content-between">
                       <strong>저축 금리</strong>
                       <div>
-                        <span class="text-muted">{{ product.options.intr_rate }} /   </span>
+                        <span class="text-muted">{{ product.options.intr_rate }} / </span>
                         <span class="display-4 fw-bold">{{ product.options.intr_rate2 }} %</span>
                       </div>
                     </div>
@@ -51,15 +51,16 @@
                   </div>
                 </div>
               </div>
-              <canvas id="interestRateChart"></canvas>
+              <hr style="margin-top: 50px;">
+              <div class="col-12" style="margin-top: 70px;">
+                <canvas id="interestRateChart"></canvas>
+              </div>
             </div>
             <div v-else>
               <p>관심 상품이 없습니다.</p>
               <button @click="router.push({name: 'finance'})">상품 보러 가기 !</button>
             </div>
           </div>
-        </div>
-        <div>
         </div>
       </section>
     </main>
@@ -196,8 +197,6 @@ onMounted(() => {
   fetchProducts();
 });
 
-
-
 </script>
 
 <style scoped>
@@ -207,6 +206,6 @@ onMounted(() => {
 }
 
 .card {
-  width: 80%; /* 카드 너비를 0.8배로 줄임 */
+  width: 100%; /* 카드 너비를 100%로 설정하여 그리드 시스템에 맞게 조정 */
 }
 </style>
