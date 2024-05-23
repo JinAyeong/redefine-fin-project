@@ -16,7 +16,7 @@
                 <div class="col-lg-8 col-xl-8">
                   <form id="contactForm" data-sb-form-api-token="API_TOKEN" @submit.prevent="logIn">
                     <div class="filter-btn-group mb-3 row g-0">
-                      <button v-for="option in filterOptions" :key="option.value" @click="rate_filter = option.value" :class="{ active: rate_filter === option.value }" class="col btn btn-outline-primary">{{ option.label }}</button> <!-- 변경된 부분 -->
+                      <button v-for="option in filterOptions" :key="option.value" @click="rate_filter = option.value" :class="{ active: rate_filter === option.value }" class="col btn btn-outline-primary me-2">{{ option.label }}</button> <!-- 변경된 부분 -->
                     </div>
                     <div class="input-group mb-3">
                       <label class="input-group-text" for="from_currency">From</label>
