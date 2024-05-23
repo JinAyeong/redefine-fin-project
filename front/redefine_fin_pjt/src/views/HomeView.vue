@@ -26,7 +26,7 @@
               <div class="col-lg-8">
                   <div class="row gx-5 row-cols-1 row-cols-md-2">
                       <div class="col mb-5 h-100">
-                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="..\redefine-fin-project\front\imgs\map_icon.png" alt="..." /></div>
+                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="" alt="..." /></div>
                           <h2 class="h5">통합 금융 상품 조회</h2>
                           <p class="mb-0">
                             쉽고 편리하게! 모든 은행의 금융 상품을 한눈에 모아 볼 수 있는 서비스를 경험하고, 
@@ -76,61 +76,61 @@
           </div>
       </div>
   </section>
-
-    <!-- Team members section-->
-    <section class="py-5 bg-light">
-        <div class="container px-5 my-5">
-            <div class="text-center">
-                <h2 class="fw-bolder">Our team</h2>
-                <p class="lead fw-normal text-muted mb-5">"redeFINe" Developers</p>
-            </div>
-            <div class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center">
-                <div class="col mb-5 mb-5 mb-xl-0">
-                    <div class="text-center">
-                        <img class="img-fluid rounded-circle mb-4 px-4" src="" alt="..." />
-                        <h5 class="fw-bolder">진아영</h5>
-                        <div class="fst-italic text-muted">Jin Ayoung</div>
-                    </div>
-                </div>
-                <div class="col mb-5 mb-5 mb-xl-0">
-                    <div class="text-center">
-                        <img class="img-fluid rounded-circle mb-4 px-4" src="..\redefine-fin-project\front\imgs\IMG_0707.jpg" alt="..." />
-                        <h5 class="fw-bolder">홍수인</h5>
-                        <div class="fst-italic text-muted">Hong Suin</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-</template>
-
-<script setup>
-
-import { onMounted } from 'vue';
-import { useDepositStore } from '@/stores/deposit';
-import { useRouter } from 'vue-router';
-
-const depositstore = useDepositStore();
-const router = useRouter()
-
-if (depositstore.saveDeposit.length === 0) {
-  onMounted(async () => {
-    await depositstore.saveDeposit();
-    await depositstore.saveSaving();
-    await depositstore.getDeposits();
-    await depositstore.getSavings();
-    await depositstore.getAllProducts();
-  });
-}
-
-const findProduct = function () {
-  router.push({name: 'recommend'})
-}
-
-</script>
-
-<style scoped>
-
-</style>
+      <!-- Team members section-->
+      <section class="py-5 bg-light">
+          <div class="container px-5 my-5">
+              <div class="text-center">
+                  <h2 class="fw-bolder">Our team</h2>
+                  <p class="lead fw-normal text-muted mb-5">"redeFINe" Developers</p>
+              </div>
+              <div class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center">
+                  <div class="col mb-5 mb-5 mb-xl-0">
+                      <div class="text-center">
+                          <img class="img-fluid rounded-circle mb-4 team-img" src="" alt="진아영" />
+                          <h5 class="fw-bolder">진아영</h5>
+                          <div class="fst-italic text-muted">Jin Ayoung</div>
+                      </div>
+                  </div>
+                  <div class="col mb-5 mb-5 mb-xl-0">
+                      <div class="text-center">
+                          <img class="img-fluid rounded-circle mb-4 team-img" src="../../../imgs/IMG_0707.jpg" alt="홍수인" />
+                          <h5 class="fw-bolder">홍수인</h5>
+                          <div class="fst-italic text-muted">Hong Suin</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+  </template>
+  
+  <script setup>
+  import { onMounted } from 'vue';
+  import { useDepositStore } from '@/stores/deposit';
+  import { useRouter } from 'vue-router';
+  
+  const depositstore = useDepositStore();
+  const router = useRouter();
+  
+  if (depositstore.saveDeposit.length === 0) {
+    onMounted(async () => {
+      await depositstore.saveDeposit();
+      await depositstore.saveSaving();
+      await depositstore.getDeposits();
+      await depositstore.getSavings();
+      await depositstore.getAllProducts();
+    });
+  }
+  
+  const findProduct = function () {
+    router.push({name: 'recommend'})
+  }
+  </script>
+  
+  <style scoped>
+  .team-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+  }
+  </style>
+  
