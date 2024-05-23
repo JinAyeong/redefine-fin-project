@@ -30,7 +30,7 @@
                     </li>
                     <li class="mb-2 d-flex justify-content-between">
                       <strong>나이</strong>
-                      <span>{{ userProfile.age }}</span>
+                      <span>{{ userProfile.age }}세</span>
                     </li>
                     <li class="mb-2 d-flex justify-content-between">
                       <strong>자산</strong>

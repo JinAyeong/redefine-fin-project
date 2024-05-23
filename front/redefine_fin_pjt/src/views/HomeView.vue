@@ -5,8 +5,8 @@
           <div class="row gx-5 align-items-center justify-content-center">
               <div class="col-lg-8 col-xl-7 col-xxl-6">
                   <div class="my-5 text-center text-xl-start">
-                      <h1 class="display-5 fw-bolder text-white mb-2">Poster</h1>
-                      <p class="lead fw-normal text-white-50 mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit!</p>
+                      <h1 class="display-5 fw-bolder text-white mb-6">맞춤형 상품 추천</h1>
+                      <p class="lead fw-normal text-white-50 mb-4">상품 선택이 어려운 당신에게 최적의 상품을 추천해드립니다.<br>지금 나에게 딱 맞는 상품을 확인해보세요!</p>
                       <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                           <a class="btn btn-primary btn-lg px-4 me-sm-3"  @click="findProduct">상품 추천 바로가기</a>
                       </div>
@@ -15,7 +15,6 @@
           </div>
       </div>
   </header>
-    
   <!-- Features section-->
   <section class="py-5" id="features">
       <div class="container px-5 my-5">
@@ -45,7 +44,7 @@
                     </div>
                     <div class="col-lg-6 mb-5">
                       <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="맞춤 금융 상품 추천" />
+                        <img class="card-img-top" src="@/assets/imgs/recommend.png" alt="맞춤 금융 상품 추천" />
                         <div class="card-body p-4">
                           <a class="text-decoration-none link-dark stretched-link" href="#!">
                             <div class="h5 card-title mb-3">맞춤 금융 상품 추천</div>

@@ -22,6 +22,7 @@ class User(AbstractBaseUser):
 
 import random
 import requests
+from redefine_fin_project.settings import DEPOSIT_API
 
 first_name_samples = '김이박최정강조윤임차진홍나'
 middle_name_samples = '민승예지도하주채현지유아수재'
@@ -40,7 +41,7 @@ def random_name():
 DP_URL = 'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json'
 SP_URL = 'http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json'
 
-API_KEY='af4da62fbcd91032aa0d9c3afb73ed08'
+API_KEY=DEPOSIT_API
 
 financial_products = []
 
@@ -117,8 +118,8 @@ with open(save_dir, 'w', encoding="utf-8") as f:
                 ]
             ),  # 금융 상품 리스트
             'age': random.randint(1, 100),  # 나이
-            'money': random.randrange(0, 100000000, 100000),  # 현재 가진 금액
-            'salary': random.randrange(0, 1500000000, 1000000),  # 연봉
+            'salary': random.randrange(0, 100000000, 100000),  # 연봉
+            'money': random.randrange(0, 1500000000, 1000000),  # 자산
             'password': '1234',
             'is_active': True,
             'is_staff': False,

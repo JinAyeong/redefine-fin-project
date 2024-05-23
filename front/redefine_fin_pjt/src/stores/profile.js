@@ -104,6 +104,7 @@ export const useProfileStore = defineStore('profile', () => {
 
   // 로그아웃
   const logOut = function () {
+    if (confirm("로그아웃 하시겠습니까?") == true) {
     axios({
       method: 'post',
       url: `${API_URL}/accounts/logout/`,
@@ -123,8 +124,9 @@ export const useProfileStore = defineStore('profile', () => {
       .catch(error => {
         console.log(error)
       })
-  }
+  }}
 
+  
   // 회원정보 수정
   const profileUpdate = function (payload) {
     const { name, email, age, money, salary } = payload
