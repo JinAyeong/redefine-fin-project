@@ -7,7 +7,7 @@
       <p class="card-text">저축 단위: {{ depositOption.save_trm }} 개월</p>
       <p class="card-text">저축금리: {{ depositOption.intr_rate }} %</p>
       <p class="card-text">최고 우대 금리: {{ depositOption.intr_rate2 }} %</p>
-      <button class="btn btn-outline-navy fixed-button" @click="addOrCancelProduct(depositOption.fin_prdt_cd, depositOption.id)">
+      <button v-if="profilestore.userName" class="btn btn-outline-navy fixed-button" @click="addOrCancelProduct(depositOption.fin_prdt_cd, depositOption.id)">
         {{ isProductAdded(depositOption.fin_prdt_cd, depositOption.id) ? '가입 취소 하기' : '상품 가입하기' }}
       </button>
     </div>

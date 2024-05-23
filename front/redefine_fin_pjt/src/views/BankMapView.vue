@@ -1,11 +1,28 @@
 <template>
-    <div>
-      <div>
-        <h1>🔍 주변 은행 검색 🔎</h1>
-        <h3> ✅현재 내 주변 은행을 검색해보세요 !  </h3>
+  <section class="py-5">
+  <div class="container px-5">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <a class="navbar-brand" style="margin-left: 10px; display: flex; align-items: center; height: 100%;" href="#">주변 은행 검색</a>
+        <h5 style="margin: 0; display: flex; align-items: center; height: 100%;"><a class="nav-link" href="http://localhost:5173/finance/saving">|</a></h5>
+        <div style="margin-left: 20px;">
+          <ul class="navbar-nav" style="display: flex; align-items: center; height: 100%;">
+            <select class="form-select" name="bank" id="bank" v-model="selectedBank">
+            <option :value="null" selected hidden>은행을 선택해주세요</option>
+            <option v-for="bank in store.banks" :value="bank" :key="bank">
+              {{ bank }}
+            </option>
+          </select>
+            <li class="nav-item">
+
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="content-map">
-        <form class="search-form" @submit.prevent="search">
+    </div>
+    <div class="d-flex" style="margin-right: 20px;">
+      <form class="search-form" @submit.prevent="search">
           <select
             class="form-select"
             name="location1"
@@ -31,21 +48,17 @@
               {{ locate2 }}
             </option>
           </select>
-          <select class="form-select" name="bank" id="bank" v-model="selectedBank">
-            <option :value="null" selected hidden>은행을 선택해주세요</option>
-            <option v-for="bank in store.banks" :value="bank" :key="bank">
-              {{ bank }}
-            </option>
-          </select>
-          <button class="btn btn-info" type="submit">검색</button>
+          <button class="btn btn-outline-secondary"  @click="fetchDepositProducts">검색</button>
         </form>
-        <div id="map" style="width: 70%; height: 600px"></div>
-      </div>
     </div>
+  </nav>
+  <div id="map" style="width: 100%; height: 600px"></div>
+  </div>
+  </section>
   </template>
   
   <script setup>
-  import { ref, onMounted } from "vue";
+  import { ref } from "vue";
   import { usePlacesStore } from "@/stores/place";
   
   const store = usePlacesStore();
@@ -121,13 +134,18 @@
       }
     });
   };
-  
-  // 페이지가 로드될 때 initMap 호출
+
+
+  import { onMounted } from "vue";
+
   onMounted(() => {
-    // 기본 키워드로 초기화
     initMap("은행");
   });
+
+
   </script>
+  
+
   
   <style scoped>
   /* 스타일링 추가 */

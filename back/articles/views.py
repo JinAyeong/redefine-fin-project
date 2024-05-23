@@ -25,7 +25,7 @@ def article_list(request):
 
 # 게시글 상세 조회 / 수정 / 삭제
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([IsAuthenticatedOrReadOnly])
+@permission_classes([IsAuthenticated])
 def article_detail(request, article_pk):
     # article = Article.objects.get(pk=article_pk)
     article = get_object_or_404(Article, pk=article_pk)
@@ -48,7 +48,7 @@ def article_detail(request, article_pk):
 
 # 댓글 조회
 @api_view(['GET'])
-@permission_classes([IsAuthenticatedOrReadOnly])
+@permission_classes([IsAuthenticated])
 def comment_list(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     # if request.method == 'GET':
@@ -58,7 +58,7 @@ def comment_list(request, article_pk):
 
 # 댓글 생성
 @api_view(['POST'])
-@permission_classes([IsAuthenticatedOrReadOnly])
+@permission_classes([IsAuthenticated])
 def comment_create(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     if request.method == 'POST':
