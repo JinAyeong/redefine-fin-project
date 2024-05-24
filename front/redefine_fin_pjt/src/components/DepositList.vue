@@ -50,12 +50,12 @@
             <option value="한국산업은행">한국산업은행</option>
             <option value="국민은행">국민은행</option>
             <option value="신한은행">신한은행</option>
-            <option value="농협은행 주식회사">농협은행 주식회사</option>
+            <option value="농협은행주식회사">농협은행 주식회사</option>
             <option value="하나은행">하나은행</option>
             <option value="주식회사 케이뱅크">주식회사 케이뱅크</option>
             <option value="수협은행">수협은행</option>
             <option value="주식회사 카카오뱅크">주식회사 카카오뱅크</option>
-            <option value="코스뱅크 주식회사">코스뱅크 주식회사</option>
+            <option value="토스뱅크 주식회사">토스뱅크 주식회사</option>
           </select>
           <button @click="fetchDepositProducts" type="button" class="btn btn-outline-secondary">검색</button>
         </div>
