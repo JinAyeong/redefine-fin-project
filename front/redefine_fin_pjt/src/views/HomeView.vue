@@ -20,7 +20,7 @@
       <div class="container px-5 my-5">
         <div class="row gx-5">
           <div class="col-lg-4 mb-5 mb-lg-0">
-            <h2 class="fw-bolder mb-0">redeFINe의 <br> 다양한 서비스를 이용해보세요!</h2>
+            <h2 class="fw-bolder mb-0" style="text-align: center;">redeFINe의 <br> 다양한 서비스를 <br> 이용해보세요!</h2>
           </div>
           <div class="col-lg-8">
             <div id="featureCarousel" class="carousel slide" data-bs-ride="carousel">

@@ -7,11 +7,10 @@ import requests
 from datetime import date
 from .serializers import ExchangeRatesSerializer
 from .models import ExchangeRates
-from redefine_fin_project.settings import EXCHANGE_API
 
 
 # Create your views here.
-API_KEY = EXCHANGE_API
+API_KEY = 'GCEbouJZVDpfepDSHYSHKEKFmI6JM7js'
 URL = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON'
 
 # @api_view(['GET'])
